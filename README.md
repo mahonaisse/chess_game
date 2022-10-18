@@ -8,11 +8,14 @@ Chess is one of the oldest and most popular board games. Two people can play aga
 
 We wanted to create Chess because it is a simple, yet complex game. None of the information of the game is hidden at any time, so Chess becomes a game of strategic planning and improvisation. Trying to create such a game sounds exciting, and implementing more 'game' features, such as saving or loading a game, undoing a player's move, or playing against a computer, sound like a challenge and a great way for us to improve as programmers.
 
+The inputs of the project will include navigational inputs for navigating the menu and selecting options from the menu. Additionally, the user will need to input their moves for the game. Outputs will include listing the menu options, and a way to visualize the chess board. Whether that be through ASCII art, a Python library, a C++ library, or something else entirely, we are not sure yet.
+
  > Your project description should summarize the project you are proposing. Be sure to include:
  > * ~~Why is it important or interesting to you?~~ (already answered)
  > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
  (C++ definitely, if yall could please expand on how we'd use Python, that'd be great)
- > * What will be the input/output of your project? (possibly expand from Python, otherwise a simple ascii board with an input line for moves/features)
+ > * What will be the input/output of your project? 
+ (possibly expand from Python, otherwise a simple ascii board with an input line for moves/features)
  > * What are the features that the project provides?
  > This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted. (game saving/loading, undoing movings, playing with computer, anything else is great)
  > 
