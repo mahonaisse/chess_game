@@ -1,10 +1,10 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=8880745&assignment_repo_type=AssignmentRepo)
 # Chess: The Game
  
- Authors: [Chloe Au](https://github.com/jmcda001), [Mario Bertumen](), [Jonathan Emmons](), [Charles O'Hagin]()
+ Authors: [Chloe Au](https://github.com/lumpydumpling), [Mario Bertumen](https://github.com/mahonaisse), [Jonathan Emmons](https://github.com/Jonathanace), [Charles O'Hagin](https://github.com/CharlesEOhagin)
 
 ## Description 
-Chess is one of the oldest and most popular board games. Two people can play against each other, first choosing between the black or white side, then taking turns to move one of their pieces according to that piece's fixed rules. The game continues until a player's King piece is [checkmated](https://www.chess.com/terms/check-chess#:~:text=When%20a%20king%20is%20attacked,must%20get%20out%20of%20check!) or can no longer move out of harm of an opposing piece. 
+Chess is one of the oldest and most popular board games. Two people can play against each other, first choosing between the black or white side, then taking turns to move one of their pieces according to that piece's fixed rules. The game continues until a player's King piece is [checkmated](https://www.chess.com/terms/check-chess#:~:text=When%20a%20king%20is%20attacked,must%20get%20out%20of%20check!) or can no longer move out of harm of an opposing piece(s).
 
 We wanted to create Chess because it is a simple, yet complex game. None of the information of the game is hidden at any time, so Chess becomes a game of strategic planning and improvisation. Trying to create such a game sounds exciting, and implementing more 'game' features, such as saving or loading a game, undoing a player's move, or playing against a computer, sound like a challenge and a great way for us to improve as programmers.
 
@@ -14,12 +14,12 @@ The inputs of the project will include navigational inputs for navigating the me
  > * ~~Why is it important or interesting to you?~~ (already answered)
  > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
  (C++ definitely, if yall could please expand on how we'd use Python, that'd be great)
- > * What will be the input/output of your project? 
- (possibly expand from Python, otherwise a simple ascii board with an input line for moves/features)
+ > * ~~What will be the input/output of your project? 
+ (possibly expand from Python, otherwise a simple ascii board with an input line for moves/features)~~
  > * What are the features that the project provides?
  > This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted. (game saving/loading, undoing movings, playing with computer, anything else is great)
  > 
- > You also need to set up an empty project board using GitHub projects (board view). Make sure you add the board under your project repository. You should also have a Product Backlog and In testing columns added. (i will do this -mario)
+ > ~~You also need to set up an empty project board using GitHub projects (board view). Make sure you add the board under your project repository. You should also have a Product Backlog and In testing columns added.~~ (i have done this -mario)
  > ## Phase II
  > In addition to completing the "Class Diagram" section below, you will need to:
  > * Create an "Epic" (note) for each feature. Place these epics in the `Product Backlog` column
