@@ -24,7 +24,8 @@ The inputs of the project will include navigational inputs for navigating the me
  >     * The tasks you are planning for the first sprint
  >     * How work will be divided between the team members
 ## Class Diagram
- > Include a **class diagram(s)** for your project and a **description** of the diagram(s). Your class diagram(s) should include all the main classes you plan for the project. This should be in sufficient detail that another group could pick up the project this point and successfully complete it. Use proper UML notation (as discussed in the course slides).
+![](Transparent_Chess_Class_Diagram.png)
+> Description goes here
  
  > ## Phase III
  > You will need to schedule a check-in for the second scrum meeting with the same reader you had your first scrum meeting with (using Calendly). Your entire team must be present. This meeting will occur on week 8 during lab time.
