@@ -32,7 +32,7 @@ class Position:
     def output_pos(self, file, rank):
         return f'{self.NUM_TO_FILE[file]}{rank}'
 
-    def output_cur_pos(self):
+    def __str__(self):
         return self.output_pos(self.file, self.rank)
 
     def get_directional(self, direction):

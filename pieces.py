@@ -1,6 +1,8 @@
+from chessgame import Position
+
 class Piece:
     def __init__(self, piece_pos, color):
-        self.position = position(piece_pos)
+        self.position = Position(piece_pos)
         self.color = color
         self.VALID_POSITIONS = {
             'a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8',
@@ -13,16 +15,22 @@ class Piece:
             'a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1'
         }
 
-    def change_position(new_position):
-        self.position = position(new_pos)
+    def set_position(self, new_pos):
+        self.position = Position(new_pos)
 
 class Pawn(Piece):
     def get_valid_moves(self):
-        # if color is black multiply all possible positions by -1
+        self.directions = []
         if self.color == 'W':
-            return self.position.get_directional(2) # a white pawn can move forward
+            self.directions.append(2)
         elif self.color == 'B':
-            return self.position.get_directional(6) # a black pawn can move backwards
+            self.directions.append(6)
+
+        self.valid_moves = []
+        for direction in self.directions:
+            self.valid_moves.append(self.position.get_directional(direction))
+        
+        return self.valid_moves
 
 
 class Knight(Piece):
