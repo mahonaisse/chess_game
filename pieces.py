@@ -22,23 +22,13 @@ class Position:
     def __str__(self):
         return self.output_pos(self.file, self.rank)
 
-    def get_directional(self, direction):
-        if direction == 1:
-            return self.output_pos(self.file-1, self.rank+1) if (self.file > 1 and self.rank < 8) else None # forward left
-        elif direction == 2:
-            return self.output_pos(self.file, self.rank+1) if self.rank < 8 else None # forward
-        elif direction == 3:
-            return self.output_pos(self.file+1, self.rank+1) if (self.file < 8 and self.rank) < 8 else None # forward right
-        elif direction == 4: 
-            return self.output_pos(self.file+1, self.rank) if self.file < 8 else None # right
-        elif direction == 5:
-            return self.output_pos(self.file+1, self.rank-1) if (self.file < 8 and self.rank > 1) else None # back right
-        elif direction == 6:
-            return self.output_pos(self.file, self.rank-1) if self.rank > 1 else None # back
-        elif direction == 7:
-            return self.output_pos(self.file-1, self.rank-1) if (self.file > 1 and self.rank > 1) else None # back left
-        elif direction == 8:
-            return self.output_pos(self.file-1, self.rank) if self.file > 1 else None # left
+    def get_directional(self, vertical_movement, horizontal_movement):
+        self.temp_rank = self.rank + vertical_movement
+        self.temp_file = self.rank + horizontal_movement
+        if 0 < self.temp_rank < 9 and 0 < self.temp_file < 9:
+            return self.output_pos(self.temp_file, self.temp_rank)
+        else:
+            return None
 
 class Piece:
     def __init__(self, piece_pos, color):
@@ -61,16 +51,15 @@ class Piece:
 class Pawn(Piece):
     def get_valid_moves(self):
         self.directions = []
-        self.moves_that_keep_piece_on_board = [self.position.get_directional(i) for i in range(1, 9)]
         if self.color == 'W': # white pawns can move forward
-            self.directions.append(2)
+            self.directions.append((1, 0))
         elif self.color == 'B': # black pawns can move backward
-            self.directions.append(6)
+            self.directions.append((-1, 0))
 
         # TODO: add more directions based on if there is a piece in that location the pawn can take. Pass the board as a parameter, maybe with a getter function to identify the piece at that position. 
         self.valid_moves = []
-        for direction in self.directions:
-            new_position = self.position.get_directional(direction)
+        for vertical_move, horizontal_move in self.directions:
+            new_position = self.position.get_directional(vertical_move, horizontal_move)
             self.valid_moves.append(new_position)
         
         return self.valid_moves
