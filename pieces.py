@@ -61,7 +61,6 @@ class Pawn(Piece):
         for vertical_move, horizontal_move in self.directions:
             new_position = self.position.get_directional(vertical_move, horizontal_move)
             self.valid_moves.append(new_position)
-        
         return self.valid_moves
 
 
@@ -72,7 +71,13 @@ class Biship(Piece):
     pass
 
 class King(Piece):
-    pass
+    def get_valid_moves(self): 
+        self.directions = [(i, j) for i in [1, 0, -1] for j in [1, 0, -1] if (i, j) != (0, 0)]
+        self.valid_moves = []
+        for vertical_move, horiontal_move in self.directions:
+            new_position = self.position.get_directional(vertical_move, horiontal_move)
+            self.valid_moves.append(new_position)
+        return self.valid_moves
 
 class Queen(Piece):
     pass
