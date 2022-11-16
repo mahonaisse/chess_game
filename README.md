@@ -49,6 +49,17 @@ The `Piece` class is an abstract class; it will allow all subclasses or, rather,
 22
 23 [ ] choice
 ```
+This is our main menu that will display on startup and prompt the user to do certain actions by typing in a letter into the box of the text `[ ] choice` on line 23. For example, a user typing `H` on their keyboard would then display:
+```
+20 [C] confirm:
+21 you want to learn how to play chess
+22
+23 [H] choice
+```
+The user can then type `C` on their keyboard to confirm the action. Any other key will either prompt the user to confirm a new action (if it is one of the available action-letters) or make an empty `[ ] choice`.
+
+The  on the main menu will take the user to three different places or displays: the game, the tutorial, or the end of the program.
+
 ```
 1                   r n b q k b n r
 2                   p p p p p p p p
@@ -67,6 +78,7 @@ The `Piece` class is an abstract class; it will allow all subclasses or, rather,
 15
 16 [ ] choice
 ```
+This is the display of the Chess game, which constantly updates after a player makes a move to display the current game state. It follows the same format as the main menu, with different actions for `[ ] choice` on line 16, and the user can return to the main menu any time by typing `E` and confirming by typing `C`.
 
  > ## Final deliverable
  > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
