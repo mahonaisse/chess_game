@@ -6,6 +6,28 @@ class ChessGame:
         
     def show_menu(self):
         typeGame = None
+        menu= """             
+              chess: the game
+
+                     _:_
+                    '-.-'
+                   __.'.__
+  [O] 1 player    |_______|
+                   \=====/
+  [T] 2 players     )___(
+                   /_____\
+  [L] load game     |   |
+                    |   |
+  [H] how to play   |   |
+                    |   |
+  [Q] quit          |   |
+                   /_____\
+                  (=======)
+                  }======={
+                 (_________)")
+"""
+        print(menu)
+    
         while True:
             try:
                 typeGame = int(input("Enter 1 for New Game, 2 for Load Game, or 3 for Play Custom Games")) 
