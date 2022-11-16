@@ -67,7 +67,7 @@ class Pawn(Piece):
 class Knight(Piece):
     pass
 
-class Biship(Piece):
+class Bishop(Piece):
     pass
 
 class King(Piece):
