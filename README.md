@@ -22,19 +22,52 @@ Each `Player` class will have their `name` as a string and vector of all of thei
 The `Board` class is a 2-dimensional array that will contain every `Piece`. After a valid move is made, the `Board` class will the function `updateBoard()` to update the pieces on the board. `constructBoard()` will construct a new board compliant with tournament rules. `check()` will see if the current position has a check, and `checkmate()` will see if the current position has a checkmate.
 
 The `Piece` class is an abstract class; it will allow all subclasses or, rather, all pieces to keep track of their position on the board with `rowPos` and `columnPos`, as well as if that piece is black or white with `color`. There is also the `type` as a data member, that determines which of the six subclasses that piece will use, so that the piece will moving according to its type. It then has the three functions: `moveIsLegal()` where it checks if the move is [legal](https://chess.org/rules), `moveTo()` where a piece would move to a place only if `moveIsLegal()` returns true, and `die()` when a piece gets captured by an enemy piece. Pawn, Bishop, King, Rook, Queen, and Knight are all subclasses from the `Piece` class, so these classes will derive the functions and members from `Piece`. King is another subclass of `Piece`, but has `checkmate()` instead of `die()` that will help determine if a player has yet to lose the game.
- 
- > ## Phase III
- > You will need to schedule a check-in for the second scrum meeting with the same reader you had your first scrum meeting with (using Calendly). Your entire team must be present. This meeting will occur on week 8 during lab time.
- > * Before the meeting you should perform a sprint plan like you did in Phase I.
- > * You should also make sure that your README file (and Project board) are up-to-date reflecting the current status of your project and the most recent class diagram. Previous versions of the README file should still be visible through your commit history.
-> 
-> During the meeting with your reader you will discuss: 
- > * How effective your last sprint was (each member should talk about what they did)
- > * Any tasks that did not get completed last sprint, and how you took them into consideration for this sprint
- > * Any bugs you've identified and created issues for during the sprint. Do you plan on fixing them in the next sprint or are they lower priority?
- > * What tasks you are planning for this next sprint.
 
- 
+## Interfaces
+```
+1                  chess: the game
+2
+3                         _:_
+4                        '-.-'
+5                       __.'.__
+6  [O] 1 player        |_______|
+7                       \=====/
+8  [T] 2 players         )___(
+9                       /_____\
+10 [L] load game         |   |
+11                       |   |
+12 [H] how to play       |   |
+13                       |   |
+14 [Q] quit              |   |
+15                      /_____\
+16                     (=======)
+17                     }======={
+18                    (_________)
+19 
+20 [C] confirm:
+21 you want to [action]
+22
+23 [ ] choice
+```
+```
+1                   r n b q k b n r
+2                   p p p p p p p p
+3                   • • • • • • • •
+4                   • • • • • • • •
+5                   • • • • • • • •
+6                   • • • • • • • •
+7                   P P P P P P P P
+8                   R N B K Q B N R
+9 
+10 [M] move a piece [U] undo a move [R] randomize move
+11 [E] main menu    [Q] quit
+12
+13 [C] action:
+14 you want to move [piece] to [space]
+15
+16 [ ] choice
+```
+
  > ## Final deliverable
  > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
  > Before the demo, you should do the following:
