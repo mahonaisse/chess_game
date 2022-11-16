@@ -48,6 +48,9 @@ class Piece:
     def set_position(self, new_pos):
         self.position = Position(new_pos)
 
+    def get_name(self):
+        return f'{self.color} {self.__class__.__name__} at {self.position}'
+
 class Pawn(Piece):
     def get_valid_moves(self):
         self.directions = []

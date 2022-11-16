@@ -52,12 +52,12 @@ class Board:
 
         # initial board
         self.board = {
-            'a8': None, 'b8': None, 'c8': None, 'd8': None, 'e8': None, 'f8': None, 'g8': None, 'h8': None,
-            'a7': None, 'b7': None, 'c7': None, 'd7': None, 'e7': None, 'f7': None, 'g7': None, 'h7': None,
+            'a8': self.bRook1, 'b8': self.bKnight1, 'c8': self.bBishop1, 'd8': self.bQueen, 'e8': self.bKing, 'f8': self.bBishop2, 'g8': self.bKnight2, 'h8': self.bRook2,
+            'a7': self.bPawn1, 'b7': self.bPawn2, 'c7': self.bPawn3, 'd7': self.bPawn4, 'e7': self.bPawn5, 'f7': self.bPawn6, 'g7': self.bPawn7, 'h7': self.bPawn8,
             'a6': None, 'b6': None, 'c6': None, 'd6': None, 'e6': None, 'f6': None, 'g6': None, 'h6': None,
             'a5': None, 'b5': None, 'c5': None, 'd5': None, 'e5': None, 'f5': None, 'g5': None, 'h5': None,
             'a4': None, 'b4': None, 'c4': None, 'd4': None, 'e4': None, 'f4': None, 'g4': None, 'h4': None,
             'a3': None, 'b3': None, 'c3': None, 'd3': None, 'e3': None, 'f3': None, 'g3': None, 'h3': None,
-            'a2': None, 'b2': None, 'c2': None, 'd2': None, 'e2': None, 'f2': None, 'g2': None, 'h2': None,
-            'a1': None, 'b1': None, 'c1': None, 'd1': None, 'e1': None, 'f1': None, 'g1': None, 'h1': None
+            'a2': self.wPawn1, 'b2': self.wPawn2, 'c2': self.wPawn3, 'd2': self.wPawn4, 'e2': self.wPawn5, 'f2': self.wPawn6, 'g2': self.wPawn7, 'h2': self.wPawn8,
+            'a1': self.wRook1, 'b1': self.wKnight1, 'c1': self.wBishop1, 'd1': self.wQueen, 'e1': self.wKing, 'f1': self.wBishop2, 'g1': self.wKnight2, 'h1': self.wRook2
         }
