@@ -15,6 +15,9 @@ class Position:
 
         self.rank = int(pos[1])
         self.file = self.FILE_TO_NUM[pos[0]]
+    
+    def get_cur_pos(self):
+        return self.output_pos(self.file, self.rank)
 
     def output_pos(self, file, rank):
         return f'{self.NUM_TO_FILE[file]}{rank}'
@@ -65,7 +68,6 @@ class Pawn(Piece):
             new_position = self.position.get_directional(vertical_move, horizontal_move)
             self.valid_moves.append(new_position)
         return self.valid_moves
-
 
 class Knight(Piece):
     pass

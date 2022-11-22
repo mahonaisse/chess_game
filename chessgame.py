@@ -61,3 +61,6 @@ class Board:
             'a2': self.wPawn1, 'b2': self.wPawn2, 'c2': self.wPawn3, 'd2': self.wPawn4, 'e2': self.wPawn5, 'f2': self.wPawn6, 'g2': self.wPawn7, 'h2': self.wPawn8,
             'a1': self.wRook1, 'b1': self.wKnight1, 'c1': self.wBishop1, 'd1': self.wQueen, 'e1': self.wKing, 'f1': self.wBishop2, 'g1': self.wKnight2, 'h1': self.wRook2
         }
+
+    def check_piece_at_position(self, position):
+        if self.board[position.ouptut_pos]
