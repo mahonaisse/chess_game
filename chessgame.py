@@ -1,4 +1,4 @@
-from pieces import Pawn, Knight, Bishop, King, Queen, Rook
+from pieces import Pawn, Knight, Bishop, King, Queen, Rook, Position
 class ChessGame:
     def __init__(self, whitePlayer, blackPlayer):
         self.white = whitePlayer
@@ -62,5 +62,25 @@ class Board:
             'a1': self.wRook1, 'b1': self.wKnight1, 'c1': self.wBishop1, 'd1': self.wQueen, 'e1': self.wKing, 'f1': self.wBishop2, 'g1': self.wKnight2, 'h1': self.wRook2
         }
 
-    def check_piece_at_position(self, position):
-        if self.board[position.ouptut_pos]
+    def get_piece_at_pos(self, user_pos):
+        test_pos = Position(user_pos)
+        return self.board[test_pos.get_cur_pos()]
+
+    def move_piece(self, starting_pos, ending_pos, player):
+        
+        self.starting_piece = self.get_piece_at_pos(starting_pos)
+        self.ending_piece = self.get_piece_at_pos(ending_pos)
+        if not self.starting_piece:
+            print('No piece at starting position')
+            return False
+
+        elif self.ending_piece and self.ending_piece.get_color() == self.starting_piece.get_color():
+            print('You are trying to move into an occupied square')
+            return False
+        else:
+
+            self.board[ending_pos] = self.board[starting_pos]
+            self.board[starting_pos] = None
+            self.starting_piece.set_position(ending_pos)
+            print(f'{self.starting_piece} moved from {starting_pos} to {ending_pos}.')
+        
