@@ -33,6 +33,8 @@ class Position:
         else:
             return None
 
+
+
 class Piece:
     def __init__(self, piece_pos, color):
         self.position = Position(piece_pos)
@@ -54,8 +56,11 @@ class Piece:
     def get_name(self):
         return f'{self.color} {self.__class__.__name__} at {self.position}'
 
+    def get_color(self):
+        return self.color
+
 class Pawn(Piece):
-    def get_valid_moves(self):
+    def get_valid_moves(self, board):
         self.directions = []
         if self.color == 'W': # white pawns can move forward
             self.directions.append((1, 0))
@@ -66,7 +71,8 @@ class Pawn(Piece):
         self.valid_moves = []
         for vertical_move, horizontal_move in self.directions:
             new_position = self.position.get_directional(vertical_move, horizontal_move)
-            self.valid_moves.append(new_position)
+            if not board.get_piece_at_pos(new_position):
+                self.valid_moves.append(new_position)
         return self.valid_moves
 
 class Knight(Piece):
