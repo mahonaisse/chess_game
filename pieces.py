@@ -33,12 +33,10 @@ class Position:
         else:
             return None
 
-
-
 class Piece:
     def __init__(self, piece_pos, color):
         self.position = Position(piece_pos)
-        self.color = color
+        self.color = 'White' if color == 'W' else 'Black'
         self.VALID_POSITIONS = {
             'a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8',
             'a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7',
@@ -49,6 +47,9 @@ class Piece:
             'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2',
             'a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1'
         }
+
+    def __str__(self):
+        return f'{self.color} {self.__class__.__name__ } at {self.position}'
 
     def set_position(self, new_pos):
         self.position = Position(new_pos)
@@ -74,6 +75,21 @@ class Pawn(Piece):
             if not board.get_piece_at_pos(new_position):
                 self.valid_moves.append(new_position)
         return self.valid_moves
+
+    def get_valid_takes(self, board):
+        self.directions = []
+
+        if self.color == 'W':
+            self.directions.extend([(1, -1), (1, 1)])
+        elif self.color == 'B':
+            self.directions.extend([(-1, -1), (-1, 1)])
+
+        self.valid_moves = []
+        for vertical_move, horizontal_move in self.directions:
+            new_position = self.position.get_directional(vertical_move, horizontal_move)
+            self.moves.append(new_position)
+        return self.valid_moves
+
 
 class Knight(Piece):
     pass

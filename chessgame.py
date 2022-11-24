@@ -1,4 +1,5 @@
 from pieces import Pawn, Knight, Bishop, King, Queen, Rook, Position
+
 class ChessGame:
     def __init__(self, whitePlayer, blackPlayer):
         self.white = whitePlayer
@@ -68,19 +69,33 @@ class Board:
 
     def move_piece(self, starting_pos, ending_pos, player):
         
-        self.starting_piece = self.get_piece_at_pos(starting_pos)
-        self.ending_piece = self.get_piece_at_pos(ending_pos)
-        if not self.starting_piece:
-            print('No piece at starting position')
+        self.starting_piece = self.get_piece_at_pos(starting_pos) # identify starting piece
+        self.ending_piece = self.get_piece_at_pos(ending_pos) # identify ending piece
+
+        # Check all failing conditions. If there are no failing conditions, move the piece.
+        if not self.starting_piece: # check if starting piece exists
+            print('No piece at specified starting position')
             return False
 
-        elif self.ending_piece and self.ending_piece.get_color() == self.starting_piece.get_color():
-            print('You are trying to move into an occupied square')
+        elif self.ending_piece and self.ending_piece.get_color() == self.starting_piece.get_color(): # check if ending position is an friendly occupied square
+            print('You are trying to move into a friendly-occupied square.')
             return False
-        else:
 
+        elif self.ending_piece and self.ending_piece.get_color() != self.starting_piece.get_color() and ending_pos not in self.starting_piece.get_valid_takes(self):
+            print('You are trying to take a piece that you cannot take.')
+            return False
+
+
+        elif ending_pos not in self.starting_piece.get_valid_moves(self): # checks if target move is a valid move for the piece
+            print(f'{ending_pos} is not a valid move for {self.starting_piece}.')
+            return False
+        
+
+        else: # passes all conditions, move the piece
             self.board[ending_pos] = self.board[starting_pos]
             self.board[starting_pos] = None
             self.starting_piece.set_position(ending_pos)
-            print(f'{self.starting_piece} moved from {starting_pos} to {ending_pos}.')
-        
+            if self.ending_piece: # taking enemy piece
+                print(f'{self.starting_piece} moved from {starting_pos} to {ending_pos}, taking {self.ending_piece}.')
+            else: # moving to empty square
+                print(f'{self.starting_piece} moved from {starting_pos} to empty square at {ending_pos}.')
