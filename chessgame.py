@@ -67,7 +67,7 @@ class ChessGame:
     def display_game(self):
         os.system('clear')
         whiteTurn = """
-               White to move
+                White to move
         """
         
         blackTurn = """
@@ -80,8 +80,25 @@ class ChessGame:
         """
 
         print(whiteTurn)
+
+        rowNumber = 8
+        while rowNumber > 0:
+            print("        ", rowNumber, "  ┃ ", end = "")
+            
+            # iterate through teams somehow
+            # the dots displayed on the lines are an example
+            for i in range(8):
+                print("• ", end = "")
+
+            print("")
+            rowNumber = rowNumber - 1
+        print("             ┗━━━━━━━━━━━━━━━━━")
+        print("               a b c d e f g h")
+
         print(gameChoices)
         action = input("[ ] please input an action: ")
+
+
 
 
 class Player:
