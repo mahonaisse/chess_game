@@ -61,8 +61,28 @@ class ChessGame:
     def load_saved_game():
         pass
     
-    def chess_variant():
-        pass
+#    def chess_variant():
+#        pass
+
+    def display_game(self):
+        os.system('clear')
+        whiteTurn = """
+               White to move
+        """
+        
+        blackTurn = """
+               Black to move
+        """
+
+        gameChoices = """
+[M] move a piece   [U] undo a move  [R] randomize move
+[C] cancel action  [E] main menu    [Q] quit
+        """
+
+        print(whiteTurn)
+        print(gameChoices)
+        action = input("[ ] please input an action: ")
+
 
 class Player:
     pass
