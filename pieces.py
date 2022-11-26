@@ -41,7 +41,7 @@ class Piece:
         self.pRank = pRank
         self.pFile = pFile
     
-    def isValidMove(moveToRank, moveToFile):
+    def isValidMove(moveToRank, moveToFile, board):
         pass
     
 
@@ -63,6 +63,42 @@ class Piece:
     #     self.position = Position(new_pos)
 
 class Pawn(Piece):
+    def __init__(self, name, color, pRank, pFile):
+        super().__init__(name, color, pRank, pFile)
+
+    def isValidMove(moveToRank, moveToFile, board):
+        if(self.color == "W"):
+            if(board[self.pRank + 1][self.pFile] != None):
+                return False
+            elif(self.pRank == 2):
+                if(moveToRank == 3 or moveToRank == 4):
+                    return True
+                else:
+                    return False
+            elif(self.pRank <= 8):
+                if(moveToRank == self.pRank + 1):
+                    return True
+                else:
+                    return False
+                #TODO capture rules
+        else:
+            if(board[self.pRank - 1][self.pFile] != None):
+                return False
+            elif(self.pRank == 7):
+                if(moveToRank == 6 or moveToRank == 5):
+                    return True
+                else:
+                    return False
+            elif(self.pRank >= 1):
+                if(moveToRank == self.pRank - 1):
+                    return True
+                else:
+                    return False
+                #TODO capture rules
+        
+
+
+
     # def get_valid_moves(self):
     #     self.directions = []
     #     if self.color == 'W': # white pawns can move forward
@@ -80,16 +116,27 @@ class Pawn(Piece):
     pass
 
 class Knight(Piece):
-    pass
+    def isValidMove(moveToRank, moveToFile, board):
+        #TODO add rules
+        return True
+    
 
-class Biship(Piece):
-    pass
+class Bishop(Piece):
+    def isValidMove(moveToRank, moveToFile, board):
+        #TODO add rules
+        return True
 
 class King(Piece):
-    pass
+    def isValidMove(moveToRank, moveToFile, board):
+        #TODO add rules
+        return True
 
 class Queen(Piece):
-    pass
+    def isValidMove(moveToRank, moveToFile, board):
+        #TODO add rules
+        return True
 
 class Rook(Piece):
-    pass
+    def isValidMove(moveToRank, moveToFile, board):
+        #TODO add rules
+        return True
