@@ -98,12 +98,6 @@ class ChessGame:
         print(gameChoices)
         action = input("[ ] please input an action: ")
 
-
-
-
-class Player:
-    pass
-
 class Board:
     def __init__(self):
         pass
