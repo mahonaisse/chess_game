@@ -28,12 +28,8 @@ class Player:
         self.pieces.append(Knight("N2", color, rank, 7))
         self.pieces.append(Bishop("B1", color, rank, 3))
         self.pieces.append(Bishop("B2", color, rank, 6))
-        if(color == "W"):
-            self.pieces.append(King("K", color, rank, 4))
-            self.pieces.append(Queen("Q", color, rank, 5))
-        else:
-            self.pieces.append(King("K", color, rank, 5))
-            self.pieces.append(Queen("Q", color, rank, 4))
+        self.pieces.append(King("K", color, rank, 4))
+        self.pieces.append(Queen("Q", color, rank, 5))
     
         
     def selectPiecetoMove(piece, toRank, toFile):
