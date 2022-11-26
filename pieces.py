@@ -37,11 +37,15 @@ class Piece:
     pFile = -1
     def __init__(self, name, color, pRank, pFile):
         self.name = name
-        self.name = color 
+        self.color = color 
         self.pRank = pRank
         self.pFile = pFile
+    def __str__(self):
+        return (f'name: {self.name} color: {self.color} rank: {self.pRank} file: {self.pFile}')
+    def __repr__(self):
+        return (f'Pieces(name: {self.name} color: {self.color} rank: {self.pRank} file: {self.pFile})')
     
-    def isValidMove(moveToRank, moveToFile, board):
+    def isValidMove(self, moveToRank, moveToFile, board):
         pass
     
 
@@ -66,11 +70,13 @@ class Pawn(Piece):
     def __init__(self, name, color, pRank, pFile):
         super().__init__(name, color, pRank, pFile)
 
-    def isValidMove(moveToRank, moveToFile, board):
+    def isValidMove(self, moveToRank, moveToFile, board):
+        
         if(self.color == "W"):
+            print("Inside valid move")
             if(board[self.pRank + 1][self.pFile] != None):
                 return False
-            elif(self.pRank == 2):
+            elif(self.pRank == 2 and board[self.pRank + 2][self.pFile] == None):
                 if(moveToRank == 3 or moveToRank == 4):
                     return True
                 else:
@@ -84,7 +90,7 @@ class Pawn(Piece):
         else:
             if(board[self.pRank - 1][self.pFile] != None):
                 return False
-            elif(self.pRank == 7):
+            elif(self.pRank == 7 and board[self.pRank - 2][self.pFile] == None):
                 if(moveToRank == 6 or moveToRank == 5):
                     return True
                 else:
