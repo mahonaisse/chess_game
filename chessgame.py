@@ -72,6 +72,7 @@ class Board:
         self.starting_piece = self.get_piece_at_pos(starting_pos) # identify starting piece
         self.ending_piece = self.get_piece_at_pos(ending_pos) # identify ending piece
 
+        
         # Check all failing conditions. If there are no failing conditions, move the piece.
         if not self.starting_piece: # check if starting piece exists
             print('No piece at specified starting position')
@@ -81,12 +82,12 @@ class Board:
             print('You are trying to move into a friendly-occupied square.')
             return False
 
-        elif self.ending_piece and self.ending_piece.get_color() != self.starting_piece.get_color() and ending_pos not in self.starting_piece.get_valid_takes(self):
+        elif self.ending_piece and self.ending_piece.get_color() != self.starting_piece.get_color() and ending_pos not in self.starting_piece.get_valid_takes(self): # check for invalid take
             print('You are trying to take a piece that you cannot take.')
             return False
 
 
-        elif ending_pos not in self.starting_piece.get_valid_moves(self): # checks if target move is a valid move for the piece
+        elif self.ending_piece and self.ending_piece.get_color() == self.starting_piece.get_color() and ending_pos not in self.starting_piece.get_valid_moves(self): # checks for invalid move
             print(f'{ending_pos} is not a valid move for {self.starting_piece}.')
             return False
         
