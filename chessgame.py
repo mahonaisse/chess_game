@@ -7,7 +7,7 @@ class ChessGame:
         self.black = blackPlayer
         self.board = Board()
         
-    def show_menu(self):
+    def main_menu(self):
         os.system('clear')
         typeGame = None
         inMenu = True
@@ -65,40 +65,44 @@ class ChessGame:
 #    def chess_variant():
 #        pass
 
-    def display_game(self):
+    def display_game(self, board, players_turn):
         os.system('clear')
-        whiteTurn = """
-                White to move
-        """
-        
-        blackTurn = """
+
+        if players_turn == 'White':
+            print("""
+               White to move
+        """)
+        elif players_turn == 'Black':
+            print("""
                Black to move
-        """
-
-        gameChoices = """
-[M] move a piece   [U] undo a move  [R] randomize move
-[C] cancel action  [E] main menu    [Q] quit
-        """
-
-        print(whiteTurn)
+        """)
 
         rowNumber = 8
         while rowNumber > 0:
             print("        ", rowNumber, "  ┃ ", end = "")
             
-            # iterate through teams somehow
-            # the dots displayed on the lines are an example
-            for i in range(8):
-                print("• ", end = "")
+            for columnNumber in range(8):
+                space = str(chr(ord('a') + columnNumber)) + str(rowNumber)
+                piece = board.get_piece_at_pos(space)
+
+                if isinstance(piece, Pawn):
+                    print("p", end = "")
+                
+                    print(" ", end = "")
+                else:
+                    print("• ", end = "")
 
             print("")
             rowNumber = rowNumber - 1
         print("             ┗━━━━━━━━━━━━━━━━━")
         print("               a b c d e f g h")
 
-        print(gameChoices)
-        action = input("[ ] please input an action: ")
+        print("""
+[M] move a piece   [U] undo a move  [R] randomize move
+[C] cancel action  [E] main menu    [Q] quit
+        """)
 
+        action = input("[ ] please input an action: ")
 
 
 

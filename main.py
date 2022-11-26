@@ -1,11 +1,12 @@
-from chessgame import ChessGame #, Player, Board
-#from pieces import Position, Pieces
-#from menu import
+from chessgame import ChessGame, Player, Board
 
 game = ChessGame('white', 'black')
+inMenu = True
+inGame = True
 
-while True:
-    #game.show_menu()
-    game.display_game()
+while inMenu or inGame:
+    #game.main_menu()
+    board = Board()
+    game.display_game(board, 'Black')
     break
         
