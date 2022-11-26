@@ -11,7 +11,7 @@ class ChessGame:
         os.system('clear')
         typeGame = None
         inMenu = True
-        menu= """             
+        menu= '''             
               chess: the game
 
                      _:_
@@ -30,29 +30,29 @@ class ChessGame:
                   (=======)
                   }======={
                  (_________)
-"""
+'''
         print(menu)
     
         while True:
             try:
-                typeGame = input("Enter 1 for New Game, 2 for Load Game, or 3 for Play Custom Games: ")
+                typeGame = input('Enter 1 for New Game, 2 for Load Game, or 3 for Play Custom Games: ')
                 if typeGame != 0:
                     if typeGame == '1':
-                        print("New Game entered successfully")
+                        print('New Game entered successfully')
                         self.start_new_game()
                         break
                     elif typeGame=='2':
-                        print("Load Game entered successfully")
+                        print('Load Game entered successfully')
                         self.load_saved_game()
                         break
                     elif typeGame=='3':
-                        print("Play Custom Games entered successfully")
+                        print('Play Custom Games entered successfully')
                         self.chess_variant()
                         break
                 else:
-                    print("Enter 1, 2 or 3")      
+                    print('Enter 1, 2 or 3')      
             except ValueError:
-                print("Provide an integer value...")
+                print('Provide an integer value...')
                 continue
             
     def start_new_game():
@@ -69,40 +69,73 @@ class ChessGame:
         os.system('clear')
 
         if players_turn == 'White':
-            print("""
+            print('''
                White to move
-        """)
+        ''')
         elif players_turn == 'Black':
-            print("""
+            print('''
                Black to move
-        """)
+        ''')
 
         rowNumber = 8
         while rowNumber > 0:
-            print("        ", rowNumber, "  ┃ ", end = "")
+            print('        ', rowNumber, '  ┃ ', end = '')
             
             for columnNumber in range(8):
                 space = str(chr(ord('a') + columnNumber)) + str(rowNumber)
                 piece = board.get_piece_at_pos(space)
 
+                # lower case is 'White'
+                # UPPER CASE is 'Black'
                 if isinstance(piece, Pawn):
-                    print("p", end = "")
-                
-                    print(" ", end = "")
+                    if piece.get_color() == 'White':
+                        print('p', end = '')
+                    elif piece.get_color() == 'Black':
+                        print('P', end = '')
+                    print(' ', end = '')
+                elif isinstance(piece, Knight):
+                    if piece.get_color() == 'White':
+                        print('n', end = '')
+                    elif piece.get_color() == 'Black':
+                        print('N', end = '')
+                    print(' ', end = '')
+                elif isinstance(piece, Bishop):
+                    if piece.get_color() == 'White':
+                        print('b', end = '')
+                    elif piece.get_color() == 'Black':
+                        print('B', end = '')
+                    print(' ', end = '')
+                elif isinstance(piece, King):
+                    if piece.get_color() == 'White':
+                        print('k', end = '')
+                    elif piece.get_color() == 'Black':
+                        print('K', end = '')
+                    print(' ', end = '')
+                elif isinstance(piece, Queen):
+                    if piece.get_color() == 'White':
+                        print('q', end = '')
+                    elif piece.get_color() == 'Black':
+                        print('Q', end = '')
+                    print(' ', end = '')
+                elif isinstance(piece, Rook):
+                    if piece.get_color() == 'White':
+                        print('r', end = '')
+                    elif piece.get_color() == 'Black':
+                        print('R', end = '')
+                    print(' ', end = '')
                 else:
-                    print("• ", end = "")
-
-            print("")
+                    print('• ', end = '')
+            print('')
             rowNumber = rowNumber - 1
-        print("             ┗━━━━━━━━━━━━━━━━━")
-        print("               a b c d e f g h")
+        print('             ┗━━━━━━━━━━━━━━━━━')
+        print('               a b c d e f g h')
 
-        print("""
+        print('''
 [M] move a piece   [U] undo a move  [R] randomize move
 [C] cancel action  [E] main menu    [Q] quit
-        """)
+        ''')
 
-        action = input("[ ] please input an action: ")
+        action = input('[ ] please input an action: ')
 
 
 
