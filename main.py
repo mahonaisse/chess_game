@@ -6,7 +6,10 @@ inGame = True
 
 while inMenu or inGame:
     #game.main_menu()
-    board = Board()
-    game.display_game(board, 'Black')
+    
+#    game.display_game('White')
+   
+    game.load_saved_game("all_pawns_saved_game.txt")
+   
     break
         

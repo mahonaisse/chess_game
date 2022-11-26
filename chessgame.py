@@ -9,8 +9,8 @@ class ChessGame:
         
     def main_menu(self):
         os.system('clear')
-        typeGame = None
-        inMenu = True
+        #typeGame = None
+        #inMenu = True
         menu= '''             
               chess: the game
 
@@ -56,34 +56,49 @@ class ChessGame:
                 continue
             
     def start_new_game():
-        #reset pieces to initial position
+        self.board = Board()
+        self.play_game()
         pass
         
-    def load_saved_game():
-        pass
+    def load_saved_game(self, file_name):
+        saved_game = open(file_name, 'r')
+
+        current_turn = saved_game.readline()
+
+        for row_number in range(8):
+            row = saved_game.readline()
+            for column_number in range(0, 16, 2):
+                if row[column_number] != '-':
+                    letter = row[column_number]
+#                   space = str(chr(ord('a') + column_number))) + str(row_number)
+            print("")
+
+        saved_game.close()
+
     
 #    def chess_variant():
 #        pass
 
-    def display_game(self, board, players_turn):
+    def display_game(self, players_turn):
         os.system('clear')
 
         if players_turn == 'White':
             print('''
                White to move
-        ''')
+            ''')
         elif players_turn == 'Black':
             print('''
                Black to move
-        ''')
+            ''')
 
-        rowNumber = 8
-        while rowNumber > 0:
-            print('        ', rowNumber, '  ┃ ', end = '')
+        for row_number in range(8, 0, -1):
+            print('        ', row_number, '  ┃ ', end = '')
             
-            for columnNumber in range(8):
-                space = str(chr(ord('a') + columnNumber)) + str(rowNumber)
-                piece = board.get_piece_at_pos(space)
+            for column_number in range(8):
+                space = str(chr(ord('a') + column_number)) + str(row_number)
+                piece = self.board.get_piece_at_pos(space)
+                # could not add piece_color, because program would crash if calling .get_color on a non-existent piece
+                # hence each of the following if statements call .get_color when a piece is found
 
                 # lower case is 'White'
                 # UPPER CASE is 'Black'
@@ -126,7 +141,6 @@ class ChessGame:
                 else:
                     print('• ', end = '')
             print('')
-            rowNumber = rowNumber - 1
         print('             ┗━━━━━━━━━━━━━━━━━')
         print('               a b c d e f g h')
 
@@ -137,7 +151,8 @@ class ChessGame:
 
         action = input('[ ] please input an action: ')
 
-
+    def play_game(self):
+        pass
 
 class Player:
     pass
