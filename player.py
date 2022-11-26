@@ -55,15 +55,40 @@ class Player:
     #     else:
     #         print("Not Valid Piece")    
     #         return False
+    def findPieceByPieceName(self, pieceName):
+        for i in self.pieces:
+            if i.name == pieceName:
+                return i
+        return None
+
+    def findPieceByRankFile(self, atRank, atFile):
+        for i in self.pieces:
+            if i.pRank == atRank and i.pFile == atFile:
+                return i
+        return None
+    
     def movePiece(self, pieceName, toRank, toFile, board):
-        p = next(i for i in self.pieces if i.name == pieceName)
-        if (p.isValidMove(toRank, toFile, board)):  
-            print("is valid move")                    
+        #Find the piece that based off the pieceName
+        p = self.findPieceByPieceName(pieceName)
+        if (p.isValidMove(toRank, toFile, board) == True):  
             p.pRank = toRank
             p.pFile = toFile
             return True
+        elif(p.isValidMove(toRank, toFile, board) == "capture"):
+            p.pRank = toRank
+            p.pFile = toFile
+            return "capture"
         else:
+            print("invalid move")
             return False
+
+    # def removePiece(self, pieceName):
+    #     p = self.findPiece(pieceName)
+    #     self.pieces.remove(p)
+    def removePiece(self, atRank, atFile):
+        p = self.findPieceByRankFile(atRank, atFile)
+        self.pieces.remove(p)
+
     def __str__(self):
         return(f'name: {self.name} color: {self.color} \n {self.pieces}')
 
@@ -75,16 +100,30 @@ def updateBoard(player1, player2):
         board[p.pRank][p.pFile] = p 
     return board
 
-def displayBoard(board):    
-    for row in range(1,9):
-        for col in range(1,9):
+def displayBoard(board):
+    
+    #White on Bottom Black on Top
+    for row in range(1,9,1):
+        for col in range(1,9,1):
             p = board[row][col]
             if(p != None):
                 print(f'{board[row][col].name:<2}', end=" ")
             else:
                 print(" "*2, end = " ")
         print()
- 
+
+def displayBoardReverse(board):
+    
+    #White on Bottom Black on Top
+    for row in range(8,0,-1):
+        for col in range(8,0,-1):
+            p = board[row][col]
+            if(p != None):
+                print(f'{board[row][col].name:<2}', end=" ")
+            else:
+                print(" "*2, end = " ")
+        print()
+
 #testing
 player1 = Player("Charles", "W")
 player2 = Player("Harry", "B")
@@ -93,11 +132,32 @@ print(player2)
 board = updateBoard(player1, player2)
 player1.movePiece("P1" , 4, 1, board)
 board = updateBoard(player1, player2)
-print("\n\n\nAfter move")
-print(player1)
-player2.movePiece("p1" , 5, 1, board)
-board = updateBoard(player1, player2)
-print("\n\n\nAfter move")
-print(player2)
 displayBoard(board)
+displayBoardReverse(board)
+player1.movePiece("R1" , 3, 1, board)
+board = updateBoard(player1, player2)
+displayBoard(board)
+displayBoardReverse(board)
+player1.movePiece("R1" , 3, 3, board)
+board = updateBoard(player1, player2)
+displayBoardReverse(board)
+s = player1.movePiece("R1" , 7, 3, board)
+if(s == "capture"):
+    player2.removePiece(7,3)
+board = updateBoard(player1, player2)
+displayBoardReverse(board)
+
+# board = updateBoard(player1, player2)
+# player1.movePiece("R1", 3, 1, board)
+
+
+# player1.movePiece("P1" , 4, 1, board)
+# board = updateBoard(player1, player2)
+# print("\n\n\nAfter move")
+# print(player1)
+# player2.movePiece("p1" , 5, 1, board)
+# board = updateBoard(player1, player2)
+# print("\n\n\nAfter move")
+# print(player2)
+# displayBoard(board)
 #print(board)

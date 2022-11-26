@@ -73,7 +73,6 @@ class Pawn(Piece):
     def isValidMove(self, moveToRank, moveToFile, board):
         
         if(self.color == "W"):
-            print("Inside valid move")
             if(board[self.pRank + 1][self.pFile] != None):
                 return False
             elif(self.pRank == 2 and board[self.pRank + 2][self.pFile] == None):
@@ -122,18 +121,17 @@ class Pawn(Piece):
     pass
 
 class Knight(Piece):
-    def isValidMove(moveToRank, moveToFile, board):
-        #TODO add rules
+    def isValidMove(self, moveToRank, moveToFile, board):
         return True
     
 
 class Bishop(Piece):
-    def isValidMove(moveToRank, moveToFile, board):
+    def isValidMove(self, moveToRank, moveToFile, board):
         #TODO add rules
         return True
 
 class King(Piece):
-    def isValidMove(moveToRank, moveToFile, board):
+    def isValidMove(self, moveToRank, moveToFile, board):
         #TODO add rules
         return True
 
@@ -143,6 +141,52 @@ class Queen(Piece):
         return True
 
 class Rook(Piece):
-    def isValidMove(moveToRank, moveToFile, board):
-        #TODO add rules
+    def __init__(self, name, color, pRank, pFile):
+        super().__init__(name, color, pRank, pFile)
+    
+    def isValidMove(self, moveToRank, moveToFile, board):
+        #Invalid move: when not in a straight line
+        if(moveToRank != self.pRank and moveToFile != self.pRank):
+            return False
+        else:
+            #move across file, move horizontally
+            if(moveToRank == self.pRank):
+                print("Same Rank")
+                step = 1 if moveToFile > self.pFile else -1
+                for i in range(self.pFile + 1, moveToFile, step):
+                    #Invalid: when something along the way
+                    if(board[self.pRank][i] != None):
+                        return False
+                #Nothing in the way
+
+                #Can move to the position 
+                if(board[moveToRank][moveToFile] == None):
+                    return True
+                #Own piece on the position
+                elif(board[moveToRank][moveToFile].color == self.color):
+                    return False
+                #Opposing piece on the position to capture
+                else:
+                    return "capture"
+            #move across rank, move vertically
+            else:
+                print("Same File")
+                step = 1 if moveToRank > self.pRank else -1
+                print(step)
+                for i in range(self.pRank + 1, moveToRank, step):
+                    #Invalid: when something along the way
+                    if(board[i][moveToFile] != None):
+                        return False
+                #Nothing in the way
+                print("Nothing in the way")
+                #Can move to the position 
+                if(board[moveToRank][moveToFile] == None):
+                    return True
+                #Own piece on the position
+                elif(board[moveToRank][moveToFile].color == self.color):
+                    return False
+                #Opposing piece on the position to capture
+                else:
+                    print("capture")
+                    return "capture"
         return True
