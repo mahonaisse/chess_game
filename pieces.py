@@ -83,33 +83,62 @@ class Pawn(Piece):
     def isValidMove(self, moveToRank, moveToFile, board):
         
         if(self.color == "W"):
-            if(board[self.pRank + 1][self.pFile] != None):
+            #capture rules
+            if(moveToRank == self.pRank + 1 
+            and (moveToFile == self.pFile -1 or moveToFile == self.pFile+1)):
+                if(board[moveToRank][moveToFile].color == self.color):
+                    return False
+                if(board[moveToRank][moveToFile].color != self.color):
+                    return True
+                else:
+                    return False
+            elif(board[self.pRank + 1][self.pFile] != None):
                 return False
+            #at rank 2 it can move 1 step or 2 step
             elif(self.pRank == 2 and board[self.pRank + 2][self.pFile] == None):
-                if(moveToRank == 3 or moveToRank == 4):
+                if((moveToRank == 3 or moveToRank == 4) and moveToFile == self.pFile):
                     return True
                 else:
                     return False
-            elif(self.pRank <= 8):
-                if(moveToRank == self.pRank + 1):
+            #can move only one step at a time after rank 2
+            elif(self.pRank > 2):
+                if(moveToRank == self.pRank + 1  and moveToFile == self.pFile):
                     return True
                 else:
                     return False
-                #TODO capture rules
+                #capture rules
+            elif(moveToRank == self.pRank + 1 
+            and (moveToFile == self.pFile -1 or moveToFile == self.pFile+1)):
+                if(board[moveToRank][moveToFile].color == self.color):
+                    return False
+                if(board[moveToRank][moveToFile].color != self.color):
+                    return True
+                else:
+                    return False
         else:
-            if(board[self.pRank - 1][self.pFile] != None):
+            #capture rules
+            if(moveToRank == self.pRank - 1 
+            and (moveToFile == self.pFile -1 or moveToFile == self.pFile+1)):
+                if(board[moveToRank][moveToFile] != None):
+                    return "capture"
+                else:
+                    return False
+            elif(board[self.pRank - 1][self.pFile] != None):
                 return False
+            #move 2 steps it at rank 7
             elif(self.pRank == 7 and board[self.pRank - 2][self.pFile] == None):
-                if(moveToRank == 6 or moveToRank == 5):
+                if((moveToRank == 6 or moveToRank == 5) and moveToFile == self.pFile):
                     return True
                 else:
                     return False
-            elif(self.pRank >= 1):
-                if(moveToRank == self.pRank - 1):
+            #move only one step after rank 7
+            elif(self.pRank < 7):
+                if(moveToRank == self.pRank - 1 and moveToFile == self.pFile):
                     return True
                 else:
                     return False
-                #TODO capture rules
+                #capture rules
+            
         
 
 

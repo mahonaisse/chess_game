@@ -223,6 +223,48 @@ if(s == "capture"):
     player2.removePiece(2,5)
 board = updateBoard(player1, player2)
 displayBoard(board)
+s = player1.movePiece("P4" , 4, 4, board)
+if(s == "capture"):
+    print(f'{s} {board[1][5].name}')
+    player2.removePiece(1,5)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player2.movePiece("p4" , 5, 4, board)
+if(s == "capture"):
+    print(f'{s} {board[1][5].name}')
+    player1.removePiece(1,5)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player1.movePiece("P3" , 4, 3, board)
+if(s == "capture"):
+    print(f'{s} {board[1][5].name}')
+    player1.removePiece(1,5)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player2.movePiece("p4" , 4, 3, board)
+if(s == "capture"):
+    print(f'{s} {board[4][3].name}')
+    player1.removePiece(4,3)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player1.movePiece("P2" , 4, 3, board)
+if(s == "capture"):
+    print(f'{s} {board[4][3].name}')
+    player2.removePiece(4,3)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player1.movePiece("P1" , 5, 1, board)
+if(s == "capture"):
+    print(f'{s} {board[4][3].name}')
+    player2.removePiece(4,3)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player2.movePiece("p1" , 6, 1, board)
+if(s == "capture"):
+    print(f'{s} {board[4][3].name}')
+    player2.removePiece(4,3)
+board = updateBoard(player1, player2)
+displayBoard(board)
 # board = updateBoard(player1, player2)
 # player1.movePiece("R1", 3, 1, board)
 
