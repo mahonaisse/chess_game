@@ -203,7 +203,6 @@ class King(Piece):
         if(rankDifference == 1 or fileDifference == 1):
             return self.canMoveOrCapture(moveToRank, moveToFile, board)
         else:
-            print("Inside False")
             return False
 
 class Queen(Piece):

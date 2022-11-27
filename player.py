@@ -1,5 +1,39 @@
 from pieces import *
 
+def updateBoard(player1, player2):
+    board = [[None for i in range(0,9)] for j in range(0, 9)]
+    for p in player1.pieces:
+        board[p.pRank][p.pFile] = p 
+    for p in player2.pieces:
+        board[p.pRank][p.pFile] = p 
+    return board
+
+def displayBoard(player1, player2):
+    board = updateBoard(player1, player2)
+    #White on Bottom Black on Top
+    print('*'*35)
+    print ('R/F 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |')
+    for row in range(1,9,1):
+        print(row, end="| ")
+        for col in range(1,9,1):
+            p = board[row][col]
+            if(p != None):
+                print(f'{board[row][col].name:<2}', end=" |")
+            else:
+                print(" "*2, end = " |")
+        print()
+
+def displayBoardReverse(board):
+    #White on Bottom Black on Top
+    for row in range(8,0,-1):
+        for col in range(8,0,-1):
+            p = board[row][col]
+            if(p != None):
+                print(f'{board[row][col].name:<2}', end=" ")
+            else:
+                print(" "*2, end = " ")
+        print()
+
 class Player:
     name = ''
     color = ''
@@ -40,8 +74,7 @@ class Player:
             self.pieces.append(Bishop("b2", color, rank, 6))
             self.pieces.append(King("k", color, rank, 4))
             self.pieces.append(Queen("q", color, rank, 5))
-    
-        
+           
     # def sPiecetoMove(pieceName, toRank, toFile):
     #     if piece in pieces:
     #         if piece.isValidMove(toRank, toFile):
@@ -67,20 +100,29 @@ class Player:
                 return i
         return None
     
-    def movePiece(self, pieceName, toRank, toFile, board):
+    def movePiece(self, pieceName, toRank, toFile, opponent):
+        board = updateBoard(self, opponent)
         #Find the piece that based off the pieceName
         p = self.findPieceByPieceName(pieceName)
+        #move
         if (p.isValidMove(toRank, toFile, board) == True):  
             p.pRank = toRank
             p.pFile = toFile
-            return True
+            if(self.isCheck(p,opponent)):
+                return "checked"
+            else:
+                return "moved"
+        #move and capture
         elif(p.isValidMove(toRank, toFile, board) == "capture"):
             p.pRank = toRank
             p.pFile = toFile
-            return "capture"
+            opponent.removePiece(toRank, toFile)
+            if(self.isCheck(p,opponent)):
+                return "checked"
+            else:
+                return "captured"
         else:
-            print("invalid move")
-            return False
+            return "invalid move"
 
     # def removePiece(self, pieceName):
     #     p = self.findPiece(pieceName)
@@ -88,194 +130,90 @@ class Player:
     def removePiece(self, atRank, atFile):
         p = self.findPieceByRankFile(atRank, atFile)
         self.pieces.remove(p)
+    
+    def isCheck(self, piece, opponent):
+        board = updateBoard(self, opponent)
+        oppKingName = 'k' if opponent.color == "B" else "K"
+        oppKing = opponent.findPieceByPieceName(oppKingName)
+        #if the move to king position is valid it will be a check because you can "capture" the king
+        return piece.isValidMove(oppKing.pRank, oppKing.pFile, board)
+    
+    def isCheckMate(self, piece, opponent):
+        return not (self.canGetOutOfCheckByRun(piece,opponent) or
+            self.canGetOutOfCheckByBlock(piece, opponent) or
+            self.canGetOutOfCheckByCapture(piece,opponent))
+
+    def canGetOutOfCheckByCapture(self, piece, opponent):
+        return True
+
+    def canGetOutOfCheckByRun(self, piece, opponent):
+        board = updateBoard(self, opponent)
+        oppKingName = 'k' if opponent.color == "B" else "K"
+        oppKing = opponent.findPieceByPieceName(oppKingName)
+        
+        #case 1 go up
+        toRank = oppKing.pRank + 1
+        toFile = oppKing.pFile
+        if(isOnBoard(toRank)):
+            if oppKing.isValidMove(toRank, toFile):
+                return True
+                
+        #case 2 go up and right
+        toRank = oppKing.pRank + 1
+        toFile = oppKing.pFile + 1
+        if(isOnBoard(toRank) and isOnBoard(toFile)):
+            if oppKing.isValidMove(toRank, toFile):
+                return True
+
+        #case 3 go right
+        toRank = oppKing.pRank
+        toFile = oppKing.pFile + 1
+        if(isOnBoard(toFile)):
+            if oppKing.isValidMove(toRank, toFile):
+                return True
+
+        #case 4 go down and right
+        toRank = oppKing.pRank - 1
+        toFile = oppKing.pFile + 1
+        if(isOnBoard(toRank) and isOnBoard(toFile)):
+            if oppKing.isValidMove(toRank, toFile):
+                return True
+
+        #case 5 go down
+        toRank = oppKing.pRank - 1
+        toFile = oppKing.pFile
+        if(isOnBoard(toRank)):
+            if oppKing.isValidMove(toRank, toFile):
+                return True
+                
+        #case 6 go down and left
+        toRank = oppKing.pRank - 1
+        toFile = oppKing.pFile - 1
+        if(isOnBoard(toRank) and isOnBoard(toFile)):
+            if oppKing.isValidMove(toRank, toFile):
+                return True
+
+        #case 7 go left
+        toRank = oppKing.pRank
+        toFile = oppKing.pFile - 1
+        if(isOnBoard(toFile)):
+            if oppKing.isValidMove(toRank, toFile):
+                return True
+            
+        #case 8 go up and left
+        toRank = oppKing.pRank + 1
+        toFile = oppKing.pFile - 1
+        if(isOnBoard(toRank) and isOnBoard(toFile)):
+            if oppKing.isValidMove(toRank, toFile):
+                return True
+        
+        return False
+    def canGetOutOfCheckByBlock(self, piece, opponent):
+        return True
+    
+    def isOnBoard(index):
+        return index >= 1 and index <= 8
 
     def __str__(self):
         return(f'name: {self.name} color: {self.color} \n {self.pieces}')
 
-def updateBoard(player1, player2):
-    board = [[None for i in range(0,9)] for j in range(0, 9)]
-    for p in player1.pieces:
-        board[p.pRank][p.pFile] = p 
-    for p in player2.pieces:
-        board[p.pRank][p.pFile] = p 
-    return board
-
-def displayBoard(board):
-    
-    #White on Bottom Black on Top
-    print('*'*35)
-    print ('R/F 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |')
-    for row in range(1,9,1):
-        print(row, end="| ")
-        for col in range(1,9,1):
-            p = board[row][col]
-            if(p != None):
-                print(f'{board[row][col].name:<2}', end=" |")
-            else:
-                print(" "*2, end = " |")
-        print()
-
-def displayBoardReverse(board):
-    
-    #White on Bottom Black on Top
-    for row in range(8,0,-1):
-        for col in range(8,0,-1):
-            p = board[row][col]
-            if(p != None):
-                print(f'{board[row][col].name:<2}', end=" ")
-            else:
-                print(" "*2, end = " ")
-        print()
-
-#testing
-player1 = Player("Charles", "W")
-player2 = Player("Harry", "B")
-print(player1)
-print(player2)
-board = updateBoard(player1, player2)
-player1.movePiece("P1" , 4, 1, board)
-board = updateBoard(player1, player2)
-displayBoard(board)
-displayBoardReverse(board)
-player1.movePiece("R1" , 3, 1, board)
-board = updateBoard(player1, player2)
-displayBoard(board)
-displayBoardReverse(board)
-player1.movePiece("R1" , 3, 3, board)
-board = updateBoard(player1, player2)
-displayBoardReverse(board)
-s = player1.movePiece("R1" , 7, 3, board)
-if(s == "capture"):
-    player2.removePiece(7,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-
-s = player1.movePiece("N1" , 3, 3, board)
-if(s == "capture"):
-    player2.removePiece(3,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-
-s = player2.movePiece("n1" , 6, 1, board)
-if(s == "capture"):
-    player1.removePiece(6,1)
-board = updateBoard(player1, player2)
-displayBoard(board)
-
-s = player1.movePiece("P2" , 3, 2, board)
-if(s == "capture"):
-    print(f'{s} {board[7][3].name}')
-    player1.removePiece(7,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-
-s = player1.movePiece("B1" , 2, 2, board)
-if(s == "capture"):
-    print(f'{s} {board[7][3].name}')
-    player1.removePiece(7,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player1.movePiece("B1" , 3, 1, board)
-if(s == "capture"):
-    print(f'{s} {board[7][3].name}')
-    player1.removePiece(7,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player1.movePiece("B1" , 7, 5, board)
-if(s == "capture"):
-    print(f'{s} {board[7][5].name}')
-    player2.removePiece(7,5)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player2.movePiece("q" , 7, 5, board)
-if(s == "capture"):
-    print(f'{s} {board[7][5].name}')
-    player1.removePiece(7,5)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player2.movePiece("q" , 5, 3, board)
-if(s == "capture"):
-    print(f'{s} {board[5][3].name}')
-    player1.removePiece(5,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player2.movePiece("q" , 3, 3, board)
-if(s == "capture"):
-    print(f'{s} {board[3][3].name}')
-    player1.removePiece(3,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player2.movePiece("q" , 3, 5, board)
-if(s == "capture"):
-    print(f'{s} {board[3][3].name}')
-    player1.removePiece(3,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player2.movePiece("q" , 2, 5, board)
-if(s == "capture"):
-    print(f'{s} {board[2][5].name}')
-    player1.removePiece(2,5)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player1.movePiece("K" , 2, 5, board)
-if(s == "capture"):
-    print(f'{s} {board[2][5].name}')
-    player2.removePiece(2,5)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player1.movePiece("P4" , 4, 4, board)
-if(s == "capture"):
-    print(f'{s} {board[1][5].name}')
-    player2.removePiece(1,5)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player2.movePiece("p4" , 5, 4, board)
-if(s == "capture"):
-    print(f'{s} {board[1][5].name}')
-    player1.removePiece(1,5)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player1.movePiece("P3" , 4, 3, board)
-if(s == "capture"):
-    print(f'{s} {board[1][5].name}')
-    player1.removePiece(1,5)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player2.movePiece("p4" , 4, 3, board)
-if(s == "capture"):
-    print(f'{s} {board[4][3].name}')
-    player1.removePiece(4,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player1.movePiece("P2" , 4, 3, board)
-if(s == "capture"):
-    print(f'{s} {board[4][3].name}')
-    player2.removePiece(4,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player1.movePiece("P1" , 5, 1, board)
-if(s == "capture"):
-    print(f'{s} {board[4][3].name}')
-    player2.removePiece(4,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-s = player2.movePiece("p1" , 6, 1, board)
-if(s == "capture"):
-    print(f'{s} {board[4][3].name}')
-    player2.removePiece(4,3)
-board = updateBoard(player1, player2)
-displayBoard(board)
-# board = updateBoard(player1, player2)
-# player1.movePiece("R1", 3, 1, board)
-
-
-# player1.movePiece("P1" , 4, 1, board)
-# board = updateBoard(player1, player2)
-# print("\n\n\nAfter move")
-# print(player1)
-# player2.movePiece("p1" , 5, 1, board)
-# board = updateBoard(player1, player2)
-# print("\n\n\nAfter move")
-# print(player2)
-# displayBoard(board)
-#print(board)
