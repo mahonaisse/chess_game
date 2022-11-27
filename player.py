@@ -217,6 +217,12 @@ if(s == "capture"):
     player1.removePiece(2,5)
 board = updateBoard(player1, player2)
 displayBoard(board)
+s = player1.movePiece("K" , 2, 5, board)
+if(s == "capture"):
+    print(f'{s} {board[2][5].name}')
+    player2.removePiece(2,5)
+board = updateBoard(player1, player2)
+displayBoard(board)
 # board = updateBoard(player1, player2)
 # player1.movePiece("R1", 3, 1, board)
 

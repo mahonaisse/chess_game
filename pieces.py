@@ -169,8 +169,13 @@ class King(Piece):
         super().__init__(name, color, pRank, pFile)
 
     def isValidMove(self, moveToRank, moveToFile, board):
-        #TODO add rules
-        return True
+        rankDifference = abs(self.pRank - moveToRank)
+        fileDifference = abs(self.pFile - moveToFile)
+        if(rankDifference == 1 or fileDifference == 1):
+            return self.canMoveOrCapture(moveToRank, moveToFile, board)
+        else:
+            print("Inside False")
+            return False
 
 class Queen(Piece):
     def __init__(self, name, color, pRank, pFile):
