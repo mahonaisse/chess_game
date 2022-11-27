@@ -166,7 +166,14 @@ class King(Piece):
         fileDifference = abs(self.pFile - moveToFile)
         #rank difference and/or file differnce should be 1
         if(rankDifference == 1 or fileDifference == 1):
-            return self.canMoveOrCapture(moveToRank, moveToFile, board)
+
+            #this step is to see if any of the opponents pieces can capture the king
+            #going to move to
+            if opponent.canAnyPieceCaptureKing(player, moveToRank, moveToFile):
+                return False
+            # canAnyPieceCaptureKing(self, opponent, oppKingToRank, oppKingToFile)
+            else:
+                return self.canMoveOrCapture(moveToRank, moveToFile, board)
         else:
             return False
 

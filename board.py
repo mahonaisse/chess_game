@@ -39,3 +39,6 @@ def displayBoardReverse(board):
             else:
                 print(" "*2, end = " ")
         print()
+
+def isOnBoard(index):
+    return index >= 1 and index <= 8

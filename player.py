@@ -72,22 +72,20 @@ class Player:
         p = self.findPieceByPieceName(pieceName)
         #move
         validMoveReturn = p.isValidMove(toRank, toFile, self, opponent)
-        if (validMoveReturn == True):  
+        if (validMoveReturn != False):  
             p.pRank = toRank
             p.pFile = toFile
+            result = validMoveReturn
+            if(validMoveReturn == "capture"):                
+                opponent.removePiece(toRank, toFile)
             if(self.isCheck(p,opponent)):
-                return "checked"
-            else:
-                return "moved"
-        #move and capture
-        elif(validMoveReturn == "capture"):
-            p.pRank = toRank
-            p.pFile = toFile
-            opponent.removePiece(toRank, toFile)
-            if(self.isCheck(p,opponent)):
-                return "checked"
-            else:
-                return "captured"
+                if(self.isCheckMate(opponent,p)):
+                    print("checkmate!")
+                    result = "checkmate"
+                else:
+                    print("checked!")
+                    result = "checked"
+            return result
         else:
             return "invalid move"
 
@@ -105,15 +103,25 @@ class Player:
         #if the move to king position is valid it will be a check because you can "capture" the king
         return piece.isValidMove(oppKing.pRank, oppKing.pFile, self, opponent)
     
-    def isCheckMate(self, piece, opponent):
-        return not (self.canGetOutOfCheckByRun(piece,opponent) or
-            self.canGetOutOfCheckByBlock(piece, opponent) or
-            self.canGetOutOfCheckByCapture(piece,opponent))
+    def isCheckMate(self, opponent, checkingPiece):
+        return not (self.canGetOutOfCheckByKingMove(opponent) or
+            self.canGetOutOfCheckByBlock(opponent, checkingPiece) or
+            self.canGetOutOfCheckByCapture(opponent, checkingPiece))
+    
+    # King in Check
+    # See if any of the oppoents piece can capture the piece that is checking the opponents king
+    def canGetOutOfCheckByCapture(self, opponent, checkingPiece):
+        for piece in opponent.pieces:
+            # if piece.name.upper() != "K":
+            if piece.isValidMove(checkingPiece.pRank, checkingPiece.pFile, opponent, self) == "capture":
+                return True
+        return False
 
-    def canGetOutOfCheckByCapture(self, piece, opponent):
-        return True
 
-    def canGetOutOfCheckByRun(self, piece, opponent):
+    # king is in check
+    # this function if there is any valid moves for the king 
+    # either by capture the piece checking it or run to a safe pos with no checks
+    def canGetOutOfCheckByKingMove(self, opponent):
         board = updateBoard(self, opponent)
         oppKingName = 'k' if opponent.color == "B" else "K"
         oppKing = opponent.findPieceByPieceName(oppKingName)
@@ -173,13 +181,19 @@ class Player:
         if(isOnBoard(toRank) and isOnBoard(toFile)):
             if oppKing.isValidMove(toRank, toFile, opponent, self):
                 return True
-        
         return False
-    def canGetOutOfCheckByBlock(self, piece, opponent):
-        return True
-    
-    def isOnBoard(index):
-        return index >= 1 and index <= 8
+
+    def canGetOutOfCheckByBlock(self, opponent, checkingPiece):
+        return False
+
+    # can any piece in the player's piece can move to the position 
+    # that the opponent king can move to oppKingToRank, oppKingToFile
+    def canAnyPieceCaptureKing(self, opponent, oppKingToRank, oppKingToFile):
+        for p in self.pieces:
+            if p.name.upper() != "K":
+                if p.isValidMove(oppKingToRank, oppKingToFile, self, opponent):
+                    return True
+        return False
 
     def __str__(self):
         return(f'name: {self.name} color: {self.color} \n {self.pieces}')
