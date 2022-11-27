@@ -103,15 +103,16 @@ def updateBoard(player1, player2):
 def displayBoard(board):
     
     #White on Bottom Black on Top
-
-    print("*"*25)
+    print('*'*35)
+    print ('R/F 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |')
     for row in range(1,9,1):
+        print(row, end="| ")
         for col in range(1,9,1):
             p = board[row][col]
             if(p != None):
-                print(f'{board[row][col].name:<2}', end=" ")
+                print(f'{board[row][col].name:<2}', end=" |")
             else:
-                print(" "*2, end = " ")
+                print(" "*2, end = " |")
         print()
 
 def displayBoardReverse(board):
@@ -184,6 +185,36 @@ s = player1.movePiece("B1" , 7, 5, board)
 if(s == "capture"):
     print(f'{s} {board[7][5].name}')
     player2.removePiece(7,5)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player2.movePiece("q" , 7, 5, board)
+if(s == "capture"):
+    print(f'{s} {board[7][5].name}')
+    player1.removePiece(7,5)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player2.movePiece("q" , 5, 3, board)
+if(s == "capture"):
+    print(f'{s} {board[5][3].name}')
+    player1.removePiece(5,3)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player2.movePiece("q" , 3, 3, board)
+if(s == "capture"):
+    print(f'{s} {board[3][3].name}')
+    player1.removePiece(3,3)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player2.movePiece("q" , 3, 5, board)
+if(s == "capture"):
+    print(f'{s} {board[3][3].name}')
+    player1.removePiece(3,3)
+board = updateBoard(player1, player2)
+displayBoard(board)
+s = player2.movePiece("q" , 2, 5, board)
+if(s == "capture"):
+    print(f'{s} {board[2][5].name}')
+    player1.removePiece(2,5)
 board = updateBoard(player1, player2)
 displayBoard(board)
 # board = updateBoard(player1, player2)

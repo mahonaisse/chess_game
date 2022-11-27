@@ -176,9 +176,49 @@ class Queen(Piece):
     def __init__(self, name, color, pRank, pFile):
         super().__init__(name, color, pRank, pFile)
 
-    def isValidMove(moveToRank, moveToFile, board):
-        #TODO add rules
-        return True
+    def isValidMove(self, moveToRank, moveToFile, board):
+        rankDifference = abs(moveToRank - self.pRank)
+        fileDifference = abs(moveToFile - self.pFile)
+        if(rankDifference == fileDifference or moveToRank != self.pRank or moveToFile != self.pRank):
+            #move across file, move horizontally
+            if(moveToRank == self.pRank):
+                # print("Same Rank")
+                step = 1 if moveToFile > self.pFile else -1
+                for i in range(1, fileDifference):
+                    #Invalid: when something along the way
+                    if(board[moveToRank][self.pFile + i * step] != None):
+                        return False
+                #Nothing in the way
+                return self.canMoveOrCapture(moveToRank, moveToFile, board)
+            #move across rank, move vertically
+            elif(moveToFile == self.pFile):
+                # print("Same File")
+
+                step = 1 if moveToRank > self.pRank else -1
+                print(step)
+                for i in range(1, rankDifference):
+                    #Invalid: when something along the way
+                    if(board[self.pRank + i*step][moveToFile] != None):
+                        return False
+                #Nothing in the way
+                # print("Nothing in the way")
+                return self.canMoveOrCapture(moveToRank, moveToFile, board)
+            else:
+                fileStep = 1 if moveToFile > self.pFile else -1
+                rankStep = 1 if moveToRank > self.pRank else -1
+                for i in range(1, rankDifference):   
+                    #step takes care which diagonal it goes             
+                    if board[self.pRank + i*rankStep][self.pFile + i*fileStep] != None:
+                        return False
+            #nothing in between
+                return self.canMoveOrCapture(moveToRank, moveToFile, board)
+        else:
+            return False
+            
+            
+            
+
+        
 
 class Rook(Piece):
     def __init__(self, name, color, pRank, pFile):
@@ -189,13 +229,15 @@ class Rook(Piece):
         if(moveToRank != self.pRank and moveToFile != self.pRank):
             return False
         else:
+            rankDifference = abs(moveToRank - self.pRank)
+            fileDifference = abs(moveToFile - self.pFile)
             #move across file, move horizontally
             if(moveToRank == self.pRank):
                 # print("Same Rank")
                 step = 1 if moveToFile > self.pFile else -1
-                for i in range(self.pFile + 1, moveToFile, step):
+                for i in range(1, fileDifference):
                     #Invalid: when something along the way
-                    if(board[self.pRank][i] != None):
+                    if(board[moveToRank][self.pFile + i *step] != None):
                         return False
                 #Nothing in the way
                 return self.canMoveOrCapture(moveToRank, moveToFile, board)
@@ -204,11 +246,10 @@ class Rook(Piece):
                 # print("Same File")
                 step = 1 if moveToRank > self.pRank else -1
                 print(step)
-                for i in range(self.pRank + 1, moveToRank, step):
+                for i in range(1, rankDifference):
                     #Invalid: when something along the way
-                    if(board[i][moveToFile] != None):
+                    if(board[ self.pRank +i * step][moveToFile] != None):
                         return False
                 #Nothing in the way
                 # print("Nothing in the way")
                 return self.canMoveOrCapture(moveToRank, moveToFile, board)
-        return True
