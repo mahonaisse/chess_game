@@ -148,12 +148,13 @@ class Bishop(Piece):
             #4 possibilites
             fileStep = 1 if moveToFile > self.pFile else -1
             rankStep = 1 if moveToRank > self.pRank else -1
-            #find how many spaces one should check
+            #find how many spaces one should check does not check the final destination
             for i in range(1, rankDifference):   
                 #step takes care which diagonal it goes             
                 if board[self.pRank + i*rankStep][self.pFile + i*fileStep] != None:
                     return False
             #nothing in between
+            #checks the final destination see if its own piece is on there or not
             return self.canMoveOrCapture(moveToRank, moveToFile, board)
 
 class King(Piece):
@@ -171,7 +172,6 @@ class King(Piece):
             #going to move to
             if opponent.canAnyPieceCaptureKing(player, moveToRank, moveToFile):
                 return False
-            # canAnyPieceCaptureKing(self, opponent, oppKingToRank, oppKingToFile)
             else:
                 return self.canMoveOrCapture(moveToRank, moveToFile, board)
         else:
@@ -198,7 +198,7 @@ class Queen(Piece):
                 #Nothing in the way
                 return self.canMoveOrCapture(moveToRank, moveToFile, board)
             #move across rank, move vertically
-            elif(moveToFile == self.pFile):
+            if(moveToFile == self.pFile):
                 # print("Same File")
 
                 step = 1 if moveToRank > self.pRank else -1
@@ -209,7 +209,7 @@ class Queen(Piece):
                 #Nothing in the way
                 # print("Nothing in the way")
                 return self.canMoveOrCapture(moveToRank, moveToFile, board)
-            else:
+            if(rankDifference == fileDifference):
                 fileStep = 1 if moveToFile > self.pFile else -1
                 rankStep = 1 if moveToRank > self.pRank else -1
                 for i in range(1, rankDifference):   
@@ -218,8 +218,9 @@ class Queen(Piece):
                         return False
             #nothing in between
                 return self.canMoveOrCapture(moveToRank, moveToFile, board)
-        else:
-            return False
+            else:
+                return False
+        
             
             
             
