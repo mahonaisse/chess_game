@@ -9,7 +9,7 @@ player1.movePiece("P2" , 4, 2, player2)
 player2.movePiece("p4", 5, 4, player1)
 player1.movePiece("P3" , 4, 3, player2)
 player2.movePiece("q", 4, 1, player1)
-displayBoard(player1, player2)
+#displayBoard(player1, player2)
 
 
 

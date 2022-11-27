@@ -68,6 +68,10 @@ class Player:
         return None
     
     def movePiece(self, pieceName, toRank, toFile, opponent):
+        if(self.isStaleMate(opponent)):
+            isStaleMate
+
+        print(f'Move: {pieceName} Rank: {toRank} File: {toFile}')
         board = updateBoard(self, opponent)
         #Find the piece that based off the pieceName
         
@@ -87,6 +91,7 @@ class Player:
                 else:
                     print("checked!")
                     result = "checked"
+            displayBoard(self, opponent)
             return result
         else:
             print("Invalid Move!")
@@ -117,7 +122,14 @@ class Player:
         return not (self.canGetOutOfCheckByKingMove(opponent) or
             self.canGetOutOfCheckByBlock(opponent, checkingPiece) or
             self.canGetOutOfCheckByCapture(opponent, checkingPiece))
-    
+
+    def isStaleMate(self, opponent):
+        if(len(self.pieces) == 1 and len(opponent.pieces) == 1):
+            return True
+        #TODO add other conditions
+        else:
+            return False
+
     # King in Check
     # See if any of the oppoents piece(not the king) can capture the piece that is checking the opponents king
     def canGetOutOfCheckByCapture(self, opponent, checkingPiece):

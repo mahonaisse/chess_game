@@ -15,6 +15,7 @@ def displayBoard(player1, player2):
     board = updateBoard(player1, player2)
     #White on Bottom Black on Top
     print('*'*35)
+    print ('R/F A | B | C | D | E | F | G | H |')
     print ('R/F 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |')
     for row in range(1,9,1):
         print(row, end="| ")
