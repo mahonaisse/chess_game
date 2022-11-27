@@ -131,6 +131,9 @@ class Pawn(Piece):
     pass
 
 class Knight(Piece):
+    def __init__(self, name, color, pRank, pFile):
+        super().__init__(name, color, pRank, pFile)
+
     def isValidMove(self, moveToRank, moveToFile, board):
         rankDifference = abs(moveToRank - self.pRank)
         fileDifference = abs(moveToFile - self.pFile)
@@ -142,16 +145,37 @@ class Knight(Piece):
             return False
 
 class Bishop(Piece):
+    def __init__(self, name, color, pRank, pFile):
+        super().__init__(name, color, pRank, pFile)
+
     def isValidMove(self, moveToRank, moveToFile, board):
-        #TODO add rules
-        return True
+        rankDifference = abs(moveToRank - self.pRank)
+        fileDifference = abs(moveToFile - self.pFile)
+        #if the differences aren't the same they aren't on a diagonal
+        if(rankDifference != fileDifference):
+            return False
+        else:
+            fileStep = 1 if moveToFile > self.pFile else -1
+            rankStep = 1 if moveToRank > self.pRank else -1
+            for i in range(1, rankDifference):   
+                #step takes care which diagonal it goes             
+                if board[self.pRank + i*rankStep][self.pFile + i*fileStep] != None:
+                    return False
+            #nothing in between
+            return self.canMoveOrCapture(moveToRank, moveToFile, board)
 
 class King(Piece):
+    def __init__(self, name, color, pRank, pFile):
+        super().__init__(name, color, pRank, pFile)
+
     def isValidMove(self, moveToRank, moveToFile, board):
         #TODO add rules
         return True
 
 class Queen(Piece):
+    def __init__(self, name, color, pRank, pFile):
+        super().__init__(name, color, pRank, pFile)
+
     def isValidMove(moveToRank, moveToFile, board):
         #TODO add rules
         return True
