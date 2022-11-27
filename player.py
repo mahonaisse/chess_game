@@ -103,6 +103,8 @@ def updateBoard(player1, player2):
 def displayBoard(board):
     
     #White on Bottom Black on Top
+
+    print("*"*25)
     for row in range(1,9,1):
         for col in range(1,9,1):
             p = board[row][col]
@@ -145,8 +147,26 @@ s = player1.movePiece("R1" , 7, 3, board)
 if(s == "capture"):
     player2.removePiece(7,3)
 board = updateBoard(player1, player2)
-displayBoardReverse(board)
+displayBoard(board)
 
+s = player1.movePiece("N1" , 3, 3, board)
+if(s == "capture"):
+    player2.removePiece(3,3)
+board = updateBoard(player1, player2)
+displayBoard(board)
+
+s = player2.movePiece("n1" , 6, 1, board)
+if(s == "capture"):
+    player1.removePiece(6,1)
+board = updateBoard(player1, player2)
+displayBoard(board)
+
+s = player2.movePiece("n1" , 7, 3, board)
+if(s == "capture"):
+    print(f'{s} {board[7][3].name}')
+    player1.removePiece(7,3)
+board = updateBoard(player1, player2)
+displayBoard(board)
 # board = updateBoard(player1, player2)
 # player1.movePiece("R1", 3, 1, board)
 

@@ -47,6 +47,16 @@ class Piece:
     
     def isValidMove(self, moveToRank, moveToFile, board):
         pass
+    def canMoveOrCapture(self, moveToRank, moveToFile, board):
+        #Can move to the position 
+        if(board[moveToRank][moveToFile] == None):
+            return True
+        #Own piece on the position
+        elif(board[moveToRank][moveToFile].color == self.color):
+            return False
+        #Opposing piece on the position to capture
+        else:
+            return "capture"
     
 
 
@@ -122,8 +132,14 @@ class Pawn(Piece):
 
 class Knight(Piece):
     def isValidMove(self, moveToRank, moveToFile, board):
-        return True
-    
+        rankDifference = abs(moveToRank - self.pRank)
+        fileDifference = abs(moveToFile - self.pFile)
+        #if a knight moves left/right 2 and up/down 1 or left/right 1 and up/down 2(L-Shape)
+        if((rankDifference == 2 and fileDifference == 1)
+            or (rankDifference == 1 and fileDifference == 2)):
+            return self.canMoveOrCapture(moveToRank, moveToFile, board)
+        else:
+            return False
 
 class Bishop(Piece):
     def isValidMove(self, moveToRank, moveToFile, board):
@@ -151,26 +167,17 @@ class Rook(Piece):
         else:
             #move across file, move horizontally
             if(moveToRank == self.pRank):
-                print("Same Rank")
+                # print("Same Rank")
                 step = 1 if moveToFile > self.pFile else -1
                 for i in range(self.pFile + 1, moveToFile, step):
                     #Invalid: when something along the way
                     if(board[self.pRank][i] != None):
                         return False
                 #Nothing in the way
-
-                #Can move to the position 
-                if(board[moveToRank][moveToFile] == None):
-                    return True
-                #Own piece on the position
-                elif(board[moveToRank][moveToFile].color == self.color):
-                    return False
-                #Opposing piece on the position to capture
-                else:
-                    return "capture"
+                return self.canMoveOrCapture(moveToRank, moveToFile, board)
             #move across rank, move vertically
             else:
-                print("Same File")
+                # print("Same File")
                 step = 1 if moveToRank > self.pRank else -1
                 print(step)
                 for i in range(self.pRank + 1, moveToRank, step):
@@ -178,15 +185,6 @@ class Rook(Piece):
                     if(board[i][moveToFile] != None):
                         return False
                 #Nothing in the way
-                print("Nothing in the way")
-                #Can move to the position 
-                if(board[moveToRank][moveToFile] == None):
-                    return True
-                #Own piece on the position
-                elif(board[moveToRank][moveToFile].color == self.color):
-                    return False
-                #Opposing piece on the position to capture
-                else:
-                    print("capture")
-                    return "capture"
+                # print("Nothing in the way")
+                return self.canMoveOrCapture(moveToRank, moveToFile, board)
         return True
