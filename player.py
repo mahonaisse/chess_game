@@ -1,38 +1,5 @@
 from pieces import *
-
-def updateBoard(player1, player2):
-    board = [[None for i in range(0,9)] for j in range(0, 9)]
-    for p in player1.pieces:
-        board[p.pRank][p.pFile] = p 
-    for p in player2.pieces:
-        board[p.pRank][p.pFile] = p 
-    return board
-
-def displayBoard(player1, player2):
-    board = updateBoard(player1, player2)
-    #White on Bottom Black on Top
-    print('*'*35)
-    print ('R/F 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |')
-    for row in range(1,9,1):
-        print(row, end="| ")
-        for col in range(1,9,1):
-            p = board[row][col]
-            if(p != None):
-                print(f'{board[row][col].name:<2}', end=" |")
-            else:
-                print(" "*2, end = " |")
-        print()
-
-def displayBoardReverse(board):
-    #White on Bottom Black on Top
-    for row in range(8,0,-1):
-        for col in range(8,0,-1):
-            p = board[row][col]
-            if(p != None):
-                print(f'{board[row][col].name:<2}', end=" ")
-            else:
-                print(" "*2, end = " ")
-        print()
+from board import *
 
 class Player:
     name = ''
@@ -48,7 +15,6 @@ class Player:
             pawnRank = 2
             for i in range(1,9):
                 p = Pawn( f"P{i}", color, pawnRank, i)
-                print(p)
                 self.pieces.append(p)
             pieceRank = 1
             self.pieces.append(Rook("R1", color, pieceRank, 1))
@@ -105,7 +71,8 @@ class Player:
         #Find the piece that based off the pieceName
         p = self.findPieceByPieceName(pieceName)
         #move
-        if (p.isValidMove(toRank, toFile, board) == True):  
+        validMoveReturn = p.isValidMove(toRank, toFile, self, opponent)
+        if (validMoveReturn == True):  
             p.pRank = toRank
             p.pFile = toFile
             if(self.isCheck(p,opponent)):
@@ -113,7 +80,7 @@ class Player:
             else:
                 return "moved"
         #move and capture
-        elif(p.isValidMove(toRank, toFile, board) == "capture"):
+        elif(validMoveReturn == "capture"):
             p.pRank = toRank
             p.pFile = toFile
             opponent.removePiece(toRank, toFile)
@@ -136,7 +103,7 @@ class Player:
         oppKingName = 'k' if opponent.color == "B" else "K"
         oppKing = opponent.findPieceByPieceName(oppKingName)
         #if the move to king position is valid it will be a check because you can "capture" the king
-        return piece.isValidMove(oppKing.pRank, oppKing.pFile, board)
+        return piece.isValidMove(oppKing.pRank, oppKing.pFile, self, opponent)
     
     def isCheckMate(self, piece, opponent):
         return not (self.canGetOutOfCheckByRun(piece,opponent) or
@@ -155,56 +122,56 @@ class Player:
         toRank = oppKing.pRank + 1
         toFile = oppKing.pFile
         if(isOnBoard(toRank)):
-            if oppKing.isValidMove(toRank, toFile):
+            if oppKing.isValidMove(toRank, toFile, opponent, self):
                 return True
                 
         #case 2 go up and right
         toRank = oppKing.pRank + 1
         toFile = oppKing.pFile + 1
         if(isOnBoard(toRank) and isOnBoard(toFile)):
-            if oppKing.isValidMove(toRank, toFile):
+            if oppKing.isValidMove(toRank, toFile, opponent, self):
                 return True
 
         #case 3 go right
         toRank = oppKing.pRank
         toFile = oppKing.pFile + 1
         if(isOnBoard(toFile)):
-            if oppKing.isValidMove(toRank, toFile):
+            if oppKing.isValidMove(toRank, toFile, opponent, self):
                 return True
 
         #case 4 go down and right
         toRank = oppKing.pRank - 1
         toFile = oppKing.pFile + 1
         if(isOnBoard(toRank) and isOnBoard(toFile)):
-            if oppKing.isValidMove(toRank, toFile):
+            if oppKing.isValidMove(toRank, toFile, opponent, self):
                 return True
 
         #case 5 go down
         toRank = oppKing.pRank - 1
         toFile = oppKing.pFile
         if(isOnBoard(toRank)):
-            if oppKing.isValidMove(toRank, toFile):
+            if oppKing.isValidMove(toRank, toFile, opponent, self):
                 return True
                 
         #case 6 go down and left
         toRank = oppKing.pRank - 1
         toFile = oppKing.pFile - 1
         if(isOnBoard(toRank) and isOnBoard(toFile)):
-            if oppKing.isValidMove(toRank, toFile):
+            if oppKing.isValidMove(toRank, toFile, opponent, self):
                 return True
 
         #case 7 go left
         toRank = oppKing.pRank
         toFile = oppKing.pFile - 1
         if(isOnBoard(toFile)):
-            if oppKing.isValidMove(toRank, toFile):
+            if oppKing.isValidMove(toRank, toFile, opponent, self):
                 return True
             
         #case 8 go up and left
         toRank = oppKing.pRank + 1
         toFile = oppKing.pFile - 1
         if(isOnBoard(toRank) and isOnBoard(toFile)):
-            if oppKing.isValidMove(toRank, toFile):
+            if oppKing.isValidMove(toRank, toFile, opponent, self):
                 return True
         
         return False
