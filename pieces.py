@@ -26,10 +26,10 @@ class Position:
         return self.output_pos(self.file, self.rank)
 
     def get_directional(self, vertical_movement, horizontal_movement):
-        print('    ', vertical_movement, horizontal_movement)
+        # print('    ', vertical_movement, horizontal_movement)
         self.temp_rank = self.rank + vertical_movement
         self.temp_file = self.file + horizontal_movement
-        print(self.temp_file, self.temp_rank)
+        # print(self.temp_file, self.temp_rank)
         if 0 < self.temp_rank < 9 and 0 < self.temp_file < 9:
             return self.output_pos(self.temp_file, self.temp_rank)
         else:
@@ -70,36 +70,55 @@ class Pawn(Piece):
         elif self.color == 'Black': # black pawns can move backward
             self.directions.append((-1, 0))
 
-        print(self.directions)
+        # print(self.directions)
         # TODO: add more directions based on if there is a piece in that location the pawn can take. Pass the board as a parameter, maybe with a getter function to identify the piece at that position. 
         self.valid_moves = []
         for vertical_move, horizontal_move in self.directions:
-            print(vertical_move, horizontal_move)
+            # print(vertical_move, horizontal_move)
             new_position = self.position.get_directional(vertical_move, horizontal_move)
-            print(new_position)
+            # print(new_position)
             if not board.get_piece_at_pos(new_position):
                 self.valid_moves.append(new_position)
-        print(self.directions)
-        print(self.valid_moves)
+        # print(self.directions)
+        # print(self.valid_moves)
         return self.valid_moves
 
     def get_valid_takes(self, board):
         self.directions = []
-
         if self.color == 'White':
             self.directions.extend([(1, -1), (1, 1)])
         elif self.color == 'Black':
             self.directions.extend([(-1, -1), (-1, 1)])
-
+        # print(self.directions)
         self.valid_moves = []
         for vertical_move, horizontal_move in self.directions:
             new_position = self.position.get_directional(vertical_move, horizontal_move)
-            self.moves.append(new_position)
+            # print(new_position)
+            self.valid_moves.append(new_position)
+        # print(self.valid_moves)
         return self.valid_moves
 
 
 class Knight(Piece):
-    pass
+    def get_valid_moves(self, board):
+        self.directions = [(-2, -1), (-1, -2), (2, -1), (1, -2), (-2, 1), (-1, 2), (1, 2), (2, 1)]
+        self.valid_moves = []
+        for vertical_move, horizontal_move in self.directions:
+            new_position = self.position.get_directional(vertical_move, horizontal_move)
+            if new_position and not board.get_piece_at_pos(new_position):
+                self.valid_moves.append(new_position)
+
+        return self.valid_moves
+
+    def get_valid_takes(self, board): 
+        self.directions = [(-2, -1), (-1, -2), (2, -1), (1, -2), (-2, 1), (-1, 2), (1, 2), (2, 1)]
+        self.valid_moves = []
+        for vertical_move, horizontal_move in self.directions:
+            new_position = self.position.get_directional(vertical_move, horizontal_move)
+            if new_position and board.get_piece_at_pos(new_position):
+                self.valid_moves.append(new_position)
+            
+        return self.valid_moves
 
 class Bishop(Piece):
     pass
