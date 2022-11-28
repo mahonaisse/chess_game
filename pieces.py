@@ -138,4 +138,22 @@ class Queen(Piece):
     pass
 
 class Rook(Piece):
-    pass
+    def get_valid_moves(self, board):
+        self.valid_moves = []
+        for rank_change in [-1, 1]:
+            vertical_move = rank_change
+            new_position = self.position.get_directional(vertical_move, 0)
+            while new_position and not board.get_piece_at_pos(new_position):
+                self.valid_moves.append(new_position)
+                vertical_move += rank_change
+                new_position = self.position.get_directional(vertical_move, 0)
+
+        for file_change in [-1, 1]:
+            horizontal_move = file_change
+            new_position =  self.position.get_directional(0, horizontal_move)
+            while new_position and not board.get_piece_at_pos(new_position):
+                self.valid_moves.append(new_position)
+                horizontal_move += file_change
+                new_position =  self.position.get_directional(0, horizontal_move)
+
+        return self.valid_moves
