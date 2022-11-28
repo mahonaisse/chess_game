@@ -123,13 +123,16 @@ class Bishop(Piece):
     pass
 
 class King(Piece):
-    def get_valid_moves(self): 
+    def get_valid_moves(self, board): 
         self.directions = [(i, j) for i in [1, 0, -1] for j in [1, 0, -1] if (i, j) != (0, 0)]
         self.valid_moves = []
         for vertical_move, horiontal_move in self.directions:
             new_position = self.position.get_directional(vertical_move, horiontal_move)
             self.valid_moves.append(new_position)
         return self.valid_moves
+
+def get_valid_takes(self, board):
+    return self.get_valid_moves(board)
 
 class Queen(Piece):
     pass
