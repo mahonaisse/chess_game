@@ -1,17 +1,17 @@
 from pieces import *
 from board import *
-import copy
+import copy #use deepcopy() from copy module to deep copy a list
 
 class Player:
     name = ''
+    #color can only be "W" or "B" case sensitive
     color = ''
     pieces = []
-    lostPieces = []
     def __init__(self,name,color):
         self.name = name
         self.color = color
         self.pieces = []
-        #intialize white pieces
+        #intialize white pieces name for white piece will be uppercase can potentially change to lower case
         if(color == "W"):
             pawnRank = 2
             for i in range(1,9):
@@ -26,7 +26,7 @@ class Player:
             self.pieces.append(Bishop("B2", color, pieceRank, 6))
             self.pieces.append(King("K", color, pieceRank, 4))
             self.pieces.append(Queen("Q", color, pieceRank, 5))
-        #initialize black pieces
+        #initialize black pieces name for black piece will be lower case
         else:
             pawnRank = 7
             for i in range(1,9):
@@ -41,49 +41,71 @@ class Player:
             self.pieces.append(Bishop("b2", color, rank, 6))
             self.pieces.append(King("k", color, rank, 4))
             self.pieces.append(Queen("q", color, rank, 5))
-           
-    # def sPiecetoMove(pieceName, toRank, toFile):
-    #     if piece in pieces:
-    #         if piece.isValidMove(toRank, toFile):
-    #             index = pieces.index(piece)
-    #             pieces[index].pRank = toRank
-    #             pieces[index].pFile = toFile
-    #             return True
-    #         else:
-    #             print("Not Valid Move")
-    #             return False
-    #     else:
-    #         print("Not Valid Piece")    
-    #         return False
+    #this finds the piece object that has the same pieceName
     def findPieceByPieceName(self, pieceName):
         for i in self.pieces:
             if i.name.lower() == pieceName.lower():
                 return i
         return None
-
+    #this finds the piece object that is atRank and atFile
     def findPieceByRankFile(self, atRank, atFile):
         for i in self.pieces:
             if i.pRank == atRank and i.pFile == atFile:
                 return i
         return None
+    #TODO castle
+    # def castle(self, opponent):
+    #     king = k.findPieceByPieceName("k")
+    #     kingRook = k.findPieceByPieceName("r1")
+    #     queenRook = k.findPieceByPieceName("r2")
+    #     if():
+    #         return False
+    #     else:
+    #         if(kingRook.pRank == 1 and kingRook.pRank == 1):
+    #             step = 1
+    #             # 3 cause thats the difference between the King and 
+    #             for i in range(1,3):
+    #  promotes Pawn piece to Rook, Knight, Bishop or Queen if its at the right rank
+    def promote(self, pawn, promoteTo):
+        if(not (pawn.pRank == 8 or pawn.pRank == 1)):
+            return "can not promote"
+        else:
+            countExisting = 0
+            for p in self.pieces:
+                if p.name[0].upper() == promoteTo.upper():
+                    countExisting += 1
+            name = f'{promoteTo}{countExisting}'
+            if(promoteTo.upper() == "N"):
+                pawn = Knight(name, self.color, pawn.pRank, pawn.pFile)
+            if(promoteTo.upper() == "B"):
+                pawn = Bishop(name, self.color, pawn.pRank, pawn.pFile)
+            if(promoteTo.upper() == "R"):
+                pawn = Rook(name, self.color, pawn.pRank, pawn.pFile)
+            if(promoteTo.upper() == "Q"):
+                pawn = Queen(name, self.color, pawn.pRank, pawn.pFile)
+            
+            return "promoted"
     
+    #move the piece of pieceName to toRank and toFile
     def movePiece(self, pieceName, toRank, toFile, opponent):
         if(self.isStaleMate(opponent)):
-            isStaleMate
+            return "Stalemate"
 
         print(f'Move: {pieceName} Rank: {toRank} File: {toFile}')
-        board = updateBoard(self, opponent)
-        #Find the piece that based off the pieceName
-        
+        #Find the piece that based off the pieceName        
         p = self.findPieceByPieceName(pieceName)
         #move
         validMoveReturn = p.isValidMove(toRank, toFile, self, opponent)
-        if (validMoveReturn != False):  
-            p.pRank = toRank
-            p.pFile = toFile
+        if (validMoveReturn != False): 
+            #update piece position 
+            self.updatePiece(p , toRank, toFile)
             result = validMoveReturn
             if(validMoveReturn == "capture"):                
                 opponent.removePiece(toRank, toFile)
+            #check if pawn can be promoted
+            if(isinstance(p, Pawn)):
+                queenName = "q" if p.color == "B" else "Q"
+                self.promote(p, queenName)
             if(self.isCheck(p,opponent)):
                 if(self.isCheckMate(opponent,p)):
                     print("checkmate!")
@@ -97,32 +119,30 @@ class Player:
             print("Invalid Move!")
             return "invalid move"
 
-    # def removePiece(self, pieceName):
-    #     p = self.findPiece(pieceName)
-    #     self.pieces.remove(p)
+    #remove piece atRank and atFile
     def removePiece(self, atRank, atFile):
         p = self.findPieceByRankFile(atRank, atFile)
         self.pieces.remove(p)
     
+    #update piece rank and file to atRank and atFile
     def updatePiece(self, piece, atRank, atFile):
         piece.pRank = atRank
         piece.pFile = atFile
         
-
+    #check if the piece is checking the opponenet
     def isCheck(self, piece, opponent):
-        board = updateBoard(self, opponent)
-        oppKingName = 'k' if opponent.color == "B" else "K"
-        oppKing = opponent.findPieceByPieceName(oppKingName)
+        oppKing = opponent.findPieceByPieceName("k")
         #if the move to king position is valid it will be a check because you can "capture" the king
         return piece.isValidMove(oppKing.pRank, oppKing.pFile, self, opponent)
     
+    #check if the player checkmated the opponent via checkingPiece
     def isCheckMate(self, opponent, checkingPiece):
         #if the king can't get of check and can't block and can't run it is check mate
         #DeMorgan's Law
         return not (self.canGetOutOfCheckByKingMove(opponent) or
             self.canGetOutOfCheckByBlock(opponent, checkingPiece) or
             self.canGetOutOfCheckByCapture(opponent, checkingPiece))
-
+    #check if player and opponent are in stalemate state
     def isStaleMate(self, opponent):
         if(len(self.pieces) == 1 and len(opponent.pieces) == 1):
             return True
@@ -131,23 +151,19 @@ class Player:
             return False
 
     # King in Check
-    # See if any of the oppoents piece(not the king) can capture the piece that is checking the opponents king
+    # Check if any of the oppoents piece(not the king) can capture the piece that is checking the opponents king
     def canGetOutOfCheckByCapture(self, opponent, checkingPiece):
-        board = updateBoard(self, opponent)
         for piece in opponent.pieces:
             if piece.name.upper() != "K":
                 if piece.isValidMove(checkingPiece.pRank, checkingPiece.pFile, opponent, self) == "capture":
                     return True
         return False
 
-
     # king is in check
-    # this function check if there is any valid moves for the king 
+    # check if there is any valid moves for the king 
     # either by capture the piece checking it or run to a safe pos with no checks
     def canGetOutOfCheckByKingMove(self, opponent):
-        board = updateBoard(self, opponent)
         oppKing = opponent.findPieceByPieceName("k")
-        
         #case 1 go up
         toRank = oppKing.pRank + 1
         toFile = oppKing.pFile
@@ -156,7 +172,6 @@ class Player:
                 return opponent.potentialNextMove(self, toRank, toFile)
             else:
                 return False
-                
         #case 2 go up and right
         toRank = oppKing.pRank + 1
         toFile = oppKing.pFile + 1
@@ -222,11 +237,8 @@ class Player:
         #all cases fail
         return False
     
-
-    #see if there any piece move that can get inbetween the checking piece and the king
+    #check if there any piece move that can get inbetween the checking piece and the king
     def canGetOutOfCheckByBlock(self, opponent, checkingPiece):
-        # return False
-        board = updateBoard(self, opponent)
         oppKing = opponent.findPieceByPieceName("k")
         rankDifference = abs(oppKing.pRank - checkingPiece.pRank)
         fileDifference = abs(oppKing.pFile - checkingPiece.pFile)
@@ -274,9 +286,7 @@ class Player:
         else:
             return False
 
-
-
-    # can any piece in the player's piece can move to the position 
+    # check if any piece in the player's piece can move to the position 
     # that the opponent king is on oppKingRank, oppKingFile
     def canAnyPieceCaptureKing(self, opponent, oppKingRank, oppKingFile):
         for p in self.pieces:
@@ -285,7 +295,7 @@ class Player:
                     return True
         return False
     
-    #can the opponent capture your king
+    # check if a king's potential next move will cause itself to be in check
     def potentialNextMove(self, opponent, kingToRank, kingToFile):
         tempPlayer = copy.deepcopy(self)
         tempOpponent = copy.deepcopy(opponent)
@@ -297,10 +307,6 @@ class Player:
             return False
         else:
             return True
-        
-        
-
-
+    
     def __str__(self):
         return(f'name: {self.name} color: {self.color} \n {self.pieces}')
-

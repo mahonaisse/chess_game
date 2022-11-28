@@ -1,16 +1,14 @@
 from player import *
 from pieces import *
 
-import copy
 
 player1 = Player("Charles", "W")
 player2 = Player("Harry", "B")
+# Test Scenario 1
 player1.movePiece("P2" , 4, 2, player2)
 player2.movePiece("p4", 5, 4, player1)
 player1.movePiece("P3" , 4, 3, player2)
 player2.movePiece("q", 4, 1, player1)
-#displayBoard(player1, player2)
-
 
 
 #Test Scenario 2 Scholars' mate

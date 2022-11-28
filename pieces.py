@@ -1,6 +1,7 @@
 from player import *
 from board import *
 
+#Generic Piece Class actual Piece Class such as Pawn, Rook will be derived from this class
 class Piece:
     name = ''
     color = ''
@@ -11,13 +12,20 @@ class Piece:
         self.color = color 
         self.pRank = pRank
         self.pFile = pFile
+    #return a string content of the object so it can be used in print function
     def __str__(self):
         return (f'name: {self.name} color: {self.color} rank: {self.pRank} file: {self.pFile}')
+    #return a string of a object that can be used to reconstruct original object
     def __repr__(self):
-        return (f'Pieces(name: {self.name} color: {self.color} rank: {self.pRank} file: {self.pFile})')
+        return (f'Piece(name: {self.name} color: {self.color} rank: {self.pRank} file: {self.pFile})')
     
+    # will be overwritten in the Pawn, Rook, etc.
     def isValidMove(self, moveToRank, moveToFile, player, opponent):
         pass
+    
+    # return True if it can move to position 
+    # return False if it can't move to that position
+    # return capture if it can capture piece in that position
     def canMoveOrCapture(self, moveToRank, moveToFile, board):
         
         #Can move to the position 
@@ -35,7 +43,7 @@ class Pawn(Piece):
         super().__init__(name, color, pRank, pFile)
 
     def isValidMove(self, moveToRank, moveToFile, player, opponent):
-        board = updateBoard(player,opponent)
+        board = buildBoard(player,opponent)
         if(self.color == "W"):
             #capture rules
             if(moveToRank == self.pRank + 1 
@@ -93,33 +101,12 @@ class Pawn(Piece):
                 else:
                     return False
                 
-            
-        
-
-
-
-    # def get_valid_moves(self):
-    #     self.directions = []
-    #     if self.color == 'W': # white pawns can move forward
-    #         self.directions.append((1, 0))
-    #     elif self.color == 'B': # black pawns can move backward
-    #         self.directions.append((-1, 0))
-
-    #     # TODO: add more directions based on if there is a piece in that location the pawn can take. Pass the board as a parameter, maybe with a getter function to identify the piece at that position. 
-    #     self.valid_moves = []
-    #     for vertical_move, horizontal_move in self.directions:
-    #         new_position = self.position.get_directional(vertical_move, horizontal_move)
-    #         self.valid_moves.append(new_position)
-        
-    #     return self.valid_moves
-    pass
-
 class Knight(Piece):
     def __init__(self, name, color, pRank, pFile):
         super().__init__(name, color, pRank, pFile)
 
     def isValidMove(self, moveToRank, moveToFile, player, opponent):
-        board = updateBoard(player,opponent)
+        board = buildBoard(player,opponent)
         #first find the difference in rank and file
         rankDifference = abs(moveToRank - self.pRank)
         fileDifference = abs(moveToFile - self.pFile)
@@ -136,7 +123,7 @@ class Bishop(Piece):
         super().__init__(name, color, pRank, pFile)
 
     def isValidMove(self, moveToRank, moveToFile, player, opponent):
-        board = updateBoard(player,opponent)
+        board = buildBoard(player,opponent)
         #find difference in between rank and file
         rankDifference = abs(moveToRank - self.pRank)
         fileDifference = abs(moveToFile - self.pFile)
@@ -152,6 +139,7 @@ class Bishop(Piece):
             for i in range(1, rankDifference):   
                 #step takes care which diagonal it goes             
                 if board[self.pRank + i*rankStep][self.pFile + i*fileStep] != None:
+                    #piece along the way can't move to that place
                     return False
             #nothing in between
             #checks the final destination see if its own piece is on there or not
@@ -162,7 +150,7 @@ class King(Piece):
         super().__init__(name, color, pRank, pFile)
     #TODO implement so king can't move into check
     def isValidMove(self, moveToRank, moveToFile, player, opponent):
-        board = updateBoard(player,opponent)
+        board = buildBoard(player,opponent)
         rankDifference = abs(self.pRank - moveToRank)
         fileDifference = abs(self.pFile - moveToFile)
         #rank difference and/or file differnce should be 1
@@ -183,7 +171,7 @@ class Queen(Piece):
 
     def isValidMove(self, moveToRank, moveToFile, player, opponent):
         # combine rook and bishop moves
-        board = updateBoard(player,opponent)
+        board = buildBoard(player,opponent)
         rankDifference = abs(moveToRank - self.pRank)
         fileDifference = abs(moveToFile - self.pFile)
         if(rankDifference == fileDifference or moveToRank != self.pRank or moveToFile != self.pRank):
@@ -219,20 +207,14 @@ class Queen(Piece):
             #nothing in between
                 return self.canMoveOrCapture(moveToRank, moveToFile, board)
             else:
-                return False
-        
-            
-            
-            
-
-        
+                return False   
 
 class Rook(Piece):
     def __init__(self, name, color, pRank, pFile):
         super().__init__(name, color, pRank, pFile)
     
     def isValidMove(self, moveToRank, moveToFile, player, opponent):
-        board = updateBoard(player,opponent)
+        board = buildBoard(player,opponent)
         #Invalid move: when not in a straight line
         if(moveToRank != self.pRank and moveToFile != self.pRank):
             return False
