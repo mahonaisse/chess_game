@@ -63,6 +63,7 @@ class Board:
             'a1': self.wRook1, 'b1': self.wKnight1, 'c1': self.wBishop1, 'd1': self.wQueen, 'e1': self.wKing, 'f1': self.wBishop2, 'g1': self.wKnight2, 'h1': self.wRook2
         }
 
+
     def get_piece_at_pos(self, user_pos):
         test_pos = Position(user_pos)
         return self.board[test_pos.get_cur_pos()]
@@ -72,7 +73,6 @@ class Board:
         self.starting_piece = self.get_piece_at_pos(starting_pos) # identify starting piece
         self.ending_piece = self.get_piece_at_pos(ending_pos) # identify ending piece
 
-        
         # Check all failing conditions. If there are no failing conditions, move the piece.
         if not self.starting_piece: # check if starting piece exists
             print('No piece at specified starting position')

@@ -98,7 +98,6 @@ class Pawn(Piece):
         # print(self.valid_moves)
         return self.valid_moves
 
-
 class Knight(Piece):
     def get_valid_moves(self, board):
         self.directions = [(-2, -1), (-1, -2), (2, -1), (1, -2), (-2, 1), (-1, 2), (1, 2), (2, 1)]
