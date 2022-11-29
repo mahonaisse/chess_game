@@ -171,15 +171,16 @@ class Queen(Piece):
 
     def isValidMove(self, moveToRank, moveToFile, player, opponent):
         # combine rook and bishop moves
+        # combine rook and bishop moves
         board = buildBoard(player,opponent)
         rankDifference = abs(moveToRank - self.pRank)
         fileDifference = abs(moveToFile - self.pFile)
-        if(rankDifference == fileDifference 
-            or (moveToRank != self.pRank and moveToFile == self.pFile) 
-            or (moveToFile == self.pRank and moveToFile != self.pFile)):
-            
+        if(rankDifference == fileDifference #diagonal
+            or (moveToRank != self.pRank and moveToFile == self.pFile) #cross ranks
+            or (moveToRank == self.pRank and moveToFile != self.pFile)): #cross files
             #move across file, move horizontally
             if(moveToRank == self.pRank):
+                # print("Same Rank")
                 step = 1 if moveToFile > self.pFile else -1
                 for i in range(1, fileDifference):
                     #Invalid: when something along the way
@@ -208,8 +209,10 @@ class Queen(Piece):
                         return False
             #nothing in between
                 return self.canMoveOrCapture(moveToRank, moveToFile, board)
+            else:
+                return False   
         else:
-            return False   
+            return False
 
 class Rook(Piece):
     def __init__(self, name, color, pRank, pFile):
