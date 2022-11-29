@@ -65,23 +65,16 @@ The `Piece` class is an abstract class; it will allow all subclasses or, rather,
  ## Screenshots
  ![](screenshot_of_name_entries_with_board_display_and_prompt.png)
 
- This is an example of what is first prompted to the users when starting a new game. The users are prompted to put in their names for the white and black chess player, then the game begins with the white player going first.
+ White player's piece are in white, and black player's pieces are in sea green. This is an example of what is first prompted to the users when starting a new game. The users are prompted to put in their names for the white and black chess player, then the game begins with the white player going first.
 
 ![](screenshot_of_white_first_move.png)
 
-White player's piece are in white, and black player's pieces are in sea green. A turn is made by a player by first inputting the piece that player wants to move, followed by that piece's target rank (vertical numbers), then by that piece's target file (horizontal numbers). This is shown in the left image, where Professor Paea moves `P4` (or Pawn 4) to rank `3` and file `4`. Professor Paea's and every player's input during their turn is validated, making sure that they selected their own color's piece, a piece is alive and available, and that their selected piece can move in such a direction and distance and does not take their own color's piece, otherwise they will be prompted to make their move again. Once their move has been validated, the display of the chess board is updated and prompts the next player to do their move.
+A turn is made by a player by first inputting the piece that player wants to move, followed by that piece's target rank (vertical numbers), then by that piece's target file (horizontal numbers). This is shown in the left image, where Professor Paea moves `P4` (or Pawn 4) to rank `3` and file `4`. Professor Paea's and every player's input during their turn is validated, making sure that they selected their own color's piece, a piece is alive and available, and that their selected piece can move in such a direction and distance and does not take their own color's piece, otherwise they will be prompted to make their move again. Once their move has been validated, the display of the chess board is updated and prompts the next player to do their move.
 
 
 ![](screenshot_of_final_move_and_checkmate.png)
 
 The game alternates between the white and black players, until one player is checkmated and the other player wins. The image on the left is the final move by Professor Allan, our black player, to a game similar to a [Fool's Mate](https://www.chess.com/terms/fools-mate), and the resulting board and winner are displayed in the right image.
-
- > ## Final deliverable
- > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
- > Before the demo, you should do the following:
- > * Complete the sections below (i.e. Screenshots, Installation/Usage, Testing)
- > * Plan one more sprint (that you will not necessarily complete before the end of the quarter). Your In-progress and In-testing columns should be empty (you are not doing more work currently) but your TODO column should have a full sprint plan in it as you have done before. This should include any known bugs (there should be some) or new features you would like to add. These should appear as issues/cards on your Project board.
- > * Make sure your README file and Project board are up-to-date reflecting the current status of your project (e.g. any changes that you have made during the project such as changes to your class diagram). Previous versions should still be visible through your commit history. 
 
  ## Testing
  > How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
