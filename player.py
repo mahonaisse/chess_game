@@ -141,9 +141,15 @@ class Player:
     def isCheckMate(self, opponent, checkingPiece):
         #if the king can't get of check and can't block and can't run it is check mate
         #DeMorgan's Law
-        return not (self.canGetOutOfCheckByKingMove(opponent) or
-            self.canGetOutOfCheckByBlock(opponent, checkingPiece) or
-            self.canGetOutOfCheckByCapture(opponent, checkingPiece))
+        if self.canGetOutOfCheckByKingMove(opponent):
+            return True
+        elif self.canGetOutOfCheckByBlock(opponent, checkingPiece):
+            return True
+        elif self.canGetOutOfCheckByCapture(opponent, checkingPiece):
+            return True
+        else:
+            return False
+
     #check if player and opponent are in stalemate state
     def isStaleMate(self, opponent):
         if(len(self.pieces) == 1 and len(opponent.pieces) == 1):
