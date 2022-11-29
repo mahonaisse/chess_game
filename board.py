@@ -22,7 +22,7 @@ def displayBoard(player1, player2):
     #White on Bottom Black on Top
     print ('     A    B    C    D    E    F    G    H')
     print ('     8    7    6    5    4    3    2    1')
-    print ('  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
+    print ('  ┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┓')
     for row in range(8,0,-1):
         print(row, end=" ┃")
         for col in range(8,0,-1):
@@ -35,7 +35,10 @@ def displayBoard(player1, player2):
             else:
                 print(" • ", end = " ┃")
         print()
-    print ('  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
+        if row > 1:
+            print('  ┣━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━┫')
+        else:
+            print('  ┗━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┛')
 
 # display board built on players' pieces
 # white is white black is green
