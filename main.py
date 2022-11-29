@@ -1,8 +1,6 @@
 from player import Player
 from board import displayBoard
 import os
-#from pieces import Position, Pieces
-#from menu import
 
 os.system('clear')
 
@@ -12,9 +10,10 @@ white_player = Player(white_players_name, 'W')
 black_players_name = input("Enter black player's name: ")
 black_player = Player(black_players_name, 'B')
 
-# os.system('clear')
+os.system('clear')
 
 displayBoard(white_player, black_player)
+print()
 
 move = 'Default_Move'
 non_current_player_checkmated = False
@@ -46,7 +45,8 @@ while not non_current_player_checkmated:
     move = current_player.movePiece(name_of_piece_to_move, target_rank, target_file, non_current_player)        
 
     if move: # if move is valid
-
+        os.system('clear')
+        displayBoard(current_player, non_current_player)
         # check if either player is checkmated
         # print(piece_to_move)
         if non_current_player.isCheck(piece_to_move, non_current_player) and non_current_player.isCheckMate(current_player, piece_to_move):
@@ -59,10 +59,13 @@ while not non_current_player_checkmated:
 
 
     else: # move is invalid
+        os.system('clear')
+        displayBoard(current_player, non_current_player)
+
         print('Invalid move. Please try again.')
 
     print()
-    print()
+    # print()
 
 print(f'Game is over. {current_players_name} wins.')
 

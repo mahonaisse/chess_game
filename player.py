@@ -113,7 +113,7 @@ class Player:
                 else:
                     print("checked!")
                     result = "checked"
-            displayBoard(self, opponent)
+            # displayBoard(self, opponent)
             return result
         else:
             return False
