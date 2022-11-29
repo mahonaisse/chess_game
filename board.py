@@ -20,25 +20,29 @@ def displayBoard(player1, player2):
     CEND = '\033[0m'
     board = buildBoard(player1, player2)
     #White on Bottom Black on Top
-    print ('     A    B    C    D    E    F    G    H')
-    print ('     8    7    6    5    4    3    2    1')
-    print ('  ┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┓')
+    print ('    A    B    C    D    E    F    G    H')
+    print ('    8    7    6    5    4    3    2    1')
+    print ('  ┏━━━━┯━━━━┯━━━━┯━━━━┯━━━━┯━━━━┯━━━━┯━━━━┓')
     for row in range(8,0,-1):
         print(row, end=" ┃")
         for col in range(8,0,-1):
             p = board[row][col]
             if(p != None):
                 if p.color == 'B':
-                    print(CGREEN + f' {p.name:<2}' + CEND, end=' ┃')
+                    print(CGREEN + f' {p.name:<2}' + CEND, end = "")
                 else:
-                    print(f' {p.name:<2}', end=' ┃')                
+                    print(f' {p.name:<2}', end='')                
             else:
-                print(" • ", end = " ┃")
+                print(" • ", end = "")
+            if col == 1:
+                print(end =' ┃')
+            else:
+                print(end=' │')
         print()
-        if row > 1:
-            print('  ┣━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━┫')
+        if row == 1:
+            print('  ┗━━━━┷━━━━┷━━━━┷━━━━┷━━━━┷━━━━┷━━━━┷━━━━┛')
         else:
-            print('  ┗━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┛')
+            print('  ┠────┼────┼────┼────┼────┼────┼────┼────┨')
 
 # display board built on players' pieces
 # white is white black is green
