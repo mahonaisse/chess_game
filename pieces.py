@@ -1,6 +1,13 @@
 from player import *
 from board import *
 
+def buildBoard(player1, player2):
+    board = [[None for i in range(0,9)] for j in range(0, 9)]
+    for p in player1.pieces:
+        board[p.pRank][p.pFile] = p 
+    for p in player2.pieces:
+        board[p.pRank][p.pFile] = p 
+    return board
 #Generic Piece Class actual Piece Class such as Pawn, Rook will be derived from this class
 class Piece:
     name = ''
