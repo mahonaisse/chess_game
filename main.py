@@ -48,8 +48,9 @@ while not non_current_player_checkmated:
     if move: # if move is valid
 
         # check if either player is checkmated
-        print(piece_to_move)
-        non_current_player_checkmated = non_current_player.isCheck(piece_to_move, non_current_player) and non_current_player.isCheckMate(current_player, piece_to_move)
+        # print(piece_to_move)
+        if non_current_player.isCheck(piece_to_move, non_current_player) and non_current_player.isCheckMate(current_player, piece_to_move):
+            break
         # print(f'Is {non_current_players_name} is checkmated? {non_current_player_checkmated}')
 
         # swap current player and current player's name
@@ -63,7 +64,7 @@ while not non_current_player_checkmated:
     print()
     print()
 
-
+print(f'Game is over. {current_players_name} wins.')
 
 
 
