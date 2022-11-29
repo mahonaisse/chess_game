@@ -121,8 +121,11 @@ class Player:
     #remove piece atRank and atFile
     def removePiece(self, atRank, atFile):
         p = self.findPieceByRankFile(atRank, atFile)
-        self.pieces.remove(p)
-    
+        try:
+            self.pieces.remove(p)
+        except:
+            pass
+
     #update piece rank and file to atRank and atFile
     def updatePiece(self, piece, atRank, atFile):
         piece.pRank = atRank
