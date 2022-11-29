@@ -116,8 +116,7 @@ class Player:
             displayBoard(self, opponent)
             return result
         else:
-            print("Invalid Move!")
-            return "invalid move"
+            return False
 
     #remove piece atRank and atFile
     def removePiece(self, atRank, atFile):
