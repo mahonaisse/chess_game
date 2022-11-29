@@ -33,7 +33,7 @@ def displayBoard(player1, player2):
                 else:
                     print(f'{p.name:<2}', end=' ┃')                
             else:
-                print(" "*2, end = " ┃")
+                print("• ", end = " ┃")
         print()
     print ('  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 
