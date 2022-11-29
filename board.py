@@ -20,21 +20,22 @@ def displayBoard(player1, player2):
     CEND = '\033[0m'
     board = buildBoard(player1, player2)
     #White on Bottom Black on Top
-    print('*'*35)
-    print ('R/F A | B | C | D | E | F | G | H |')
-    print ('R/F 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |')
+    print ('     A   B   C   D   E   F   G   H')
+    print ('     8   7   6   5   4   3   2   1')
+    print ('  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
     for row in range(8,0,-1):
-        print(row, end="| ")
+        print(row, end=" ┃ ")
         for col in range(8,0,-1):
             p = board[row][col]
             if(p != None):
                 if p.color == 'B':
-                    print(CGREEN + f'{p.name:<2}' + CEND, end=' |')
+                    print(CGREEN + f'{p.name:<2}' + CEND, end=' ┃')
                 else:
-                    print(f'{p.name:<2}', end=' |')                
+                    print(f'{p.name:<2}', end=' ┃')                
             else:
-                print(" "*2, end = " |")
+                print(" "*2, end = " ┃")
         print()
+    print ('  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 
 # display board built on players' pieces
 # white is white black is green
@@ -45,19 +46,19 @@ def displayBoardReverse(player1, player2):
     board = buildBoard(player1, player2)
     #White on Bottom Black on Top
     print('*'*35)
-    print ('R/F A | B | C | D | E | F | G | H |')
-    print ('R/F 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |')
+    print ('R/F A ┃ B ┃ C ┃ D ┃ E ┃ F ┃ G ┃ H ┃')
+    print ('R/F 1 ┃ 2 ┃ 3 ┃ 4 ┃ 5 ┃ 6 ┃ 7 ┃ 8 ┃')
     for row in range(1,9,1):
-        print(row, end="| ")
+        print(row, end="┃ ")
         for col in range(1,9,1):
             p = board[row][col]
             if(p != None):
                 if p.color == 'B':
-                    print(CGREEN + f'{p.name:<2}' + CEND, end=' |')
+                    print(CGREEN + f'{p.name:<2}' + CEND, end=' ┃')
                 else:
-                    print(f'{p.name:<2}', end=' |')                
+                    print(f'{p.name:<2}', end=' ┃')                
             else:
-                print(" "*2, end = " |")
+                print(" "*2, end = " ┃")
         print()
 
 def isOnBoard(index):
