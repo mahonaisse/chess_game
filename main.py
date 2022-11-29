@@ -2,10 +2,8 @@ from chessgame import ChessGame #, Player, Board
 #from pieces import Position, Pieces
 #from menu import
 
-game = ChessGame('white', 'black')
+white_players_name = input("Enter white player's name: ")
+white_player = Player(white_players_name, 'W')
 
-while True:
-    #game.show_menu()
-    game.display_game()
-    break
-        
+black_players_name = input("Enter black player's name: ")
+black_player = Player(black_players_name, 'B')
