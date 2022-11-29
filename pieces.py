@@ -171,10 +171,13 @@ class Queen(Piece):
 
     def isValidMove(self, moveToRank, moveToFile, player, opponent):
         # combine rook and bishop moves
+        # combine rook and bishop moves
         board = buildBoard(player,opponent)
         rankDifference = abs(moveToRank - self.pRank)
         fileDifference = abs(moveToFile - self.pFile)
-        if(rankDifference == fileDifference or moveToRank != self.pRank or moveToFile != self.pRank):
+        if(rankDifference == fileDifference #diagonal
+            or (moveToRank != self.pRank and moveToFile == self.pFile) #cross ranks
+            or (moveToRank == self.pRank and moveToFile != self.pFile)): #cross files
             #move across file, move horizontally
             if(moveToRank == self.pRank):
                 # print("Same Rank")
@@ -208,6 +211,8 @@ class Queen(Piece):
                 return self.canMoveOrCapture(moveToRank, moveToFile, board)
             else:
                 return False   
+        else:
+            return False
 
 class Rook(Piece):
     def __init__(self, name, color, pRank, pFile):
@@ -215,10 +220,9 @@ class Rook(Piece):
     
     def isValidMove(self, moveToRank, moveToFile, player, opponent):
         board = buildBoard(player,opponent)
-        #Invalid move: when not in a straight line
-        if(moveToRank != self.pRank and moveToFile != self.pRank):
-            return False
-        else:
+        #cross files or cross ranks
+        if((moveToRank != self.pRank and moveToFile == self.pFile)
+            or(moveToRank == self.pRank and moveToFile != self.pFile)):
             rankDifference = abs(moveToRank - self.pRank)
             fileDifference = abs(moveToFile - self.pFile)
             #move across file, move horizontally
@@ -242,3 +246,5 @@ class Rook(Piece):
                 #Nothing in the way
                 # print("Nothing in the way")
                 return self.canMoveOrCapture(moveToRank, moveToFile, board)
+        else:
+            return False

@@ -4,11 +4,25 @@ from pieces import *
 
 player1 = Player("Charles", "W")
 player2 = Player("Harry", "B")
-# Test Scenario 1
-player1.movePiece("P2" , 4, 2, player2)
-player2.movePiece("p4", 5, 4, player1)
-player1.movePiece("P3" , 4, 3, player2)
-player2.movePiece("q", 4, 1, player1)
+# player1.movePiece("P1", 4, 1, player2)
+# player1.movePiece("R1" , 3, 1, player2)
+# player1.movePiece("R1", 3, 3, player2)
+# player1.movePiece("R1", 3, 1, player2)
+# player1.movePiece("R1", 1, 1, player2)
+# player1.movePiece("P4", 4, 4, player2)
+player1.movePiece("P5", 4, 5, player2)
+player1.movePiece("Q", 3, 5, player2)
+player1.movePiece("Q", 3, 4, player2)
+player1.movePiece("Q", 3, 5, player2)
+player1.movePiece("Q", 1, 5, player2)
+
+
+
+# Test Scenario 1 Fools Mate
+# player1.movePiece("P2" , 4, 2, player2)
+# player2.movePiece("p4", 5, 4, player1)
+# player1.movePiece("P3" , 4, 3, player2)
+# player2.movePiece("q", 4, 1, player1)
 
 
 #Test Scenario 2 Scholars' mate
