@@ -12,7 +12,7 @@ The project provides features that a person could play against another person. W
 
 The inputs of the project will include navigational inputs for navigating the menu and selecting options from the menu. Additionally, the user will need to input their moves for the game. Outputs will include listing the menu options, and a way to visualize the chess board. Whether that be through ASCII art, a Python library, a C++ library, or something else entirely, we are not sure yet.
 
-## Class Diagram
+## Class Diagram 
 ![](images/diagram_of_CPP_chess_class.png)
 
 This [UML](https://www-sop.inria.fr/axis/cbrtools/usermanual-eng/Print/UMLNotationPrint.html#:~:text=The%20UML%20notation%20is%20a,classes%2C%20objects%20and%20sequence%20diagrams) diagram represents the classes and functions that we plan to implement to develop a working game of Chess. We first have `ChessGame` as the main class that all classes will be derived from. The `ChessGame` class has functions such as `play()` and `loadGame()` that allow users to play or continue a game of Chess. There is also `newGame()` that lets users start a fresh game of Chess and `quit()` that will quit the program. The `ChessGame` class has at least one player and either another player or a CPU as part of the `Player` class, and a board with pieces as part of the `Board` and `Piece` class.
@@ -73,4 +73,4 @@ The game alternates between the white and black players, until one player is che
 19 
 20 What do you want to do? []
 ```
- 
+We planned to but did not use this interface as we saw no need to. Our current project only allows games of two players, with each player inputting their names, pieces, and moves one by one. Even if we implemented ingame chess features such as [castling](https://www.chess.com/lessons/playing-the-game/castling), doing so would not call for creating an interface, as the game is processed in `player.py` and `pieces.py` and displayed through `board.py`. We would only need to implement this interface if and when we create more options to playing chess, such as with one player versus a CPU, loading a saved game, learning how to play, or saving and quitting.
