@@ -27,7 +27,7 @@ non_current_player = black_player
 
 # get initial move
 while not non_current_player_checkmated:
-    print(f"It is {current_players_name}'s ({current_player.color}'s)turn. ")
+    print(f"It is {current_players_name}'s turn. ")
     name_of_piece_to_move = input(f'What piece do you want to move, {current_players_name}? ')
     piece_to_move = current_player.findPieceByPieceName(name_of_piece_to_move)
     while not piece_to_move:
@@ -49,8 +49,8 @@ while not non_current_player_checkmated:
 
         # check if either player is checkmated
         print(piece_to_move)
-        non_current_player_checkmated = non_current_player.isCheck(piece_to_move, non_current_player) and non_current_player.isCheckMate(current_player, piece_to_move)
-        print(f'Is {non_current_players_name} ({non_current_player.color}) checkmated? {non_current_player_checkmated}')
+        non_current_player_checkmated = non_current_player.isCheckMate(current_player, piece_to_move)
+        print(f'Is {non_current_players_name} is checkmated? {non_current_player_checkmated}')
 
         # swap current player and current player's name
         current_player, non_current_player = non_current_player, current_player
@@ -59,9 +59,6 @@ while not non_current_player_checkmated:
 
     else: # move is invalid
         print('Invalid move. Please try again.')
-
-    print() # prints new line to make output more readable
-    print()
 
 
 
