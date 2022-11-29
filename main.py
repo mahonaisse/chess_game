@@ -44,9 +44,10 @@ while not non_current_player_checkmated:
     # os.system('clear')
     move = current_player.movePiece(name_of_piece_to_move, target_rank, target_file, non_current_player)        
 
+    os.system('clear')
+    displayBoard(current_player, non_current_player)
+
     if move: # if move is valid
-        os.system('clear')
-        displayBoard(current_player, non_current_player)
         # check if either player is checkmated
         # print(piece_to_move)
         if non_current_player.isCheck(piece_to_move, non_current_player) and non_current_player.isCheckMate(current_player, piece_to_move):
@@ -59,9 +60,6 @@ while not non_current_player_checkmated:
 
 
     else: # move is invalid
-        os.system('clear')
-        displayBoard(current_player, non_current_player)
-
         print('Invalid move. Please try again.')
 
     print()
