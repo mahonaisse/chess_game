@@ -54,13 +54,27 @@ The `Piece` class is an abstract class; it will allow all subclasses or, rather,
  
  ## Installation/Usage (Python versus C++)
 
- We chose to use Python over C++ for several reasons. The main reason is because most of our group members are Data Science majors, thus they have more experience in Python and are able to help the few members who do not know how to code in Python. Data Science majors, as well as our group for this project, prefer to use Python for its simplicity to learn and its more readable code. 
+ We chose to use Python over C++ for several reasons. The main reason is because most of our group members are Data Science majors, thus they have more experience in Python and are able to help the few members who do not know how to code in Python. Data Science majors, as well as our group for this project, prefer to use Python for its simplicity to learn and its more readable code. Python is made easy-to-learn and understand through its dynamic typing, automatic memory management, and automatic data type declaration for variables.
  
  This is as opposed to C++ which is a bit more complex, as the language holds more syntax rules, programming conventions, and memory management. C++ takes preference over Python when speed and compilation time matter more than readability, but this should only matter in larger projects and resource-heavy applications, such as video games. 
  
+ To run the game, all you need to do run `python3 main.py` in your terminal once you download this repository or at least the files: `main.py`, `board.py`, `pieces.py`, and `player.py`. 
 
+ There is no need to compile all the files together through a long line in your terminal or through the CMake tool as is done when coding in C++.
 
  ## Screenshots
+ ![](screenshot_of_name_entries_with_board_display_and_prompt.png)
+
+ This is an example of what is first prompted to the users when starting a new game. The users are prompted to put in their names for the white and black chess player, then the game begins with the white player going first.
+
+![](screenshot_of_white_first_move.png)
+
+White player's piece are in white, and black player's pieces are in sea green. A turn is made by a player by first inputting the piece that player wants to move, followed by that piece's target rank (vertical numbers), then by that piece's target file (horizontal numbers). This is shown in the left image, where Professor Paea moves `P4` (or Pawn 4) to rank `3` and file `4`. Professor Paea's and every player's input during their turn is validated, making sure that they selected their own color's piece, a piece is alive and available, and that their selected piece can move in such a direction and distance and does not take their own color's piece, otherwise they will be prompted to make their move again. Once their move has been validated, the display of the chess board is updated and prompts the next player to do their move.
+
+
+![](screenshot_of_final_move_and_checkmate.png)
+
+The game alternates between the white and black players, until one player is checkmated and the other player wins. The image on the left is the final move by Professor Allan, our black player, to a game similar to a [Fool's Mate](https://www.chess.com/terms/fools-mate), and the resulting board and winner are displayed in the right image.
 
  > ## Final deliverable
  > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
