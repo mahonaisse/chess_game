@@ -1,5 +1,5 @@
 from player import Player
-from board import displayBoard
+from board import * 
 import os
 
 os.system('clear')
