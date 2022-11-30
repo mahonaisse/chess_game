@@ -24,7 +24,6 @@ This [UML](https://www-sop.inria.fr/axis/cbrtools/usermanual-eng/Print/UMLNotati
 
 In the `Board.py` file we have `buildBoard(player1,player2)` which creates a board based on the location of all the pieces of `player1` and `player2`. `displayBoard(player1, player2)` displays the board in a more traditional way where white is on bottom and black is on top, and `displayBoardRevers(player1,player2)` displays it in reverse so that white is on top and black on bottom.
 
-
 In the `Player` class, we have the variables: `name`, `color`, and a list of `piece`'s. The player `__init__` constructor takes in a name and color and initializes the list of pieces that the player will control based on their color. The function `findsPieceByName(self, pieceName)` finds the piece object that has the same piece name. This function isn’t case-sensitive. The function `findPieceByRankAndFile(self, atRank, atFile)` finds the piece object that is `atRank` and `atFile`. The function `promote(self, pawn, promoteTo)` takes a pawn piece and promotes it to a Rook, Knight, Bishop, or Queen. In the function `movePiece pieceName, toRank, toFile, opponent)`, it moves the piece only if it is a valid move. The `movePiece()` function returns checkmate, check, capture, promotion, stalemate, or invalid move if any of these conditions occur. This function calls upon the piece it is moving to see if it's a valid move and if it's a capture, you must remove an opponent's piece. If it's a promotion, you promote the pawn to a queen. Then you check if the player checked or checkmated the opponent. And if it wasn’t a valid move you return invalid move. The function `removePiece(self, atRank, atFile)` removes a piece from the piece list that is at that rank and file. The function `updatePiece(self, piece, atRank, atFile)` updates the piece so that its at its new rank and file.
 
 The function `isCheck( self, opponent, checkingPiece)` checks to see if a player is checking their opponent. The function `isCheckMate(self, opponent, checkingPiece)` checks to see if a player is in checkmate. The function is `stalemate(self, opponent)` and sees if the two players are in a stalemate. The function `canGetOutOfCheckByCapture(self, opponent, checkingPiece)` checks if any of the opponent's pieces beside the opponent king can capture the checking piece. The function `canGetOutOfCheckKingByMove(self, opponent)` checks if the opponent `King` can make any legal move. The function `canGetOutOfCheckByBlock(self,  opponent, checkingPiece)` checks to see if any of the opponents can block the check. The function `canAnyPieceCaptureKing (self , opponent, oppKingRank, oppKingFile)` checks to see if any of the player's pieces can “capture” the opposing king. The `potentialNextMove(self, opponent, kingToRank, kingToFile)` checks possible what if moves by the king to see if they are legitimate or not. `__str___(self)` prints out the string representation of the `Player` class. 
@@ -37,80 +36,6 @@ The `Piece` class has the variable `name`, `color`, `pRank`, and `pFile`, which 
  We chose to use Python over C++ for several reasons. The main reason is because most of our group members are Data Science majors, thus they have more experience in Python and are able to help the few members who do not know how to code in Python. Data Science majors, as well as our group for this project, prefer to use Python for its simplicity to learn and its more readable code. Python is made easy-to-learn and understand through its dynamic typing, automatic memory management, and automatic data type declaration for variables.
  
  This is as opposed to C++ which is a bit more complex, as the language holds more syntax rules, programming conventions, and memory management. C++ takes preference over Python when speed and compilation time matter more than readability, but this should only matter in larger projects and resource-heavy applications, such as video games. 
-=======
-The `Piece` class is an abstract class; it will allow all subclasses or, rather, all pieces to keep track of their position on the board with `rowPos` and `columnPos`, as well as if that piece is black or white with `color`. There is also the `type` as a data member, that determines which of the six subclasses that piece will use, so that the piece will moving according to its type. It then has the three functions: `moveIsLegal()` where it checks if the move is [legal](https://chess.org/rules), `moveTo()` where a piece would move to a place only if `moveIsLegal()` returns true, and `die()` when a piece gets captured by an enemy piece. Pawn, Bishop, King, Rook, Queen, and Knight are all subclasses from the `Piece` class, so these classes will derive the functions and members from `Piece`. King is another subclass of `Piece`, but has `checkmate()` instead of `die()` that will help determine if a player has yet to lose the game.
-
-## Interfaces
-```
-1                  chess: the game
-2
-3                         _:_
-4                        '-.-'
-5                       __.'.__
-6  [O] 1 player        |_______|
-7                       \=====/
-8  [T] 2 players         )___(
-9                       /_____\
-10 [L] load game         |   |
-11                       |   |
-12 [H] how to play       |   |
-13                       |   |
-14 [Q] quit              |   |
-15                      /_____\
-16                     (=======)
-17                     }======={
-18                    (_________)
-19 
-20 [C] confirm:
-21 you want to [action]
-22
-23 [ ] choice
-```
-This is our main menu that will display on startup and prompt the user to do certain actions by typing in a letter into the box of the text `[ ] choice` on line 23. For example, a user typing `H` on their keyboard would then display:
-```
-20 [C] confirm:
-21 you want to learn how to play chess
-22
-23 [H] choice
-```
-The user can then type `C` on their keyboard to confirm the action. Any other key will either prompt the user to confirm a new action (if it is one of the available action-letters) or make an empty `[ ] choice`.
-
-The  on the main menu will take the user to three different places or displays: the game, the tutorial, or the end of the program.
-
-```
-1                   r n b q k b n r
-2                   p p p p p p p p
-3                   • • • • • • • •
-4                   • • • • • • • •
-5                   • • • • • • • •
-6                   • • • • • • • •
-7                   P P P P P P P P
-8                   R N B K Q B N R
-9 
-10 [M] move a piece [U] undo a move [R] randomize move
-11 [E] main menu    [Q] quit
-12
-13 [C] action:
-14 you want to move [piece] to [space]
-15
-16 [ ] choice
-```
-This is the display of the Chess game, which constantly updates after a player makes a move to display the current game state. It follows the same format as the main menu, with different actions for `[ ] choice` on line 16, and the user can return to the main menu any time by typing `E` and confirming by typing `C`.
-
- > ## Final deliverable
- > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
- > Before the demo, you should do the following:
- > * Complete the sections below (i.e. Screenshots, Installation/Usage, Testing)
- > * Plan one more sprint (that you will not necessarily complete before the end of the quarter). Your In-progress and In-testing columns should be empty (you are not doing more work currently) but your TODO column should have a full sprint plan in it as you have done before. This should include any known bugs (there should be some) or new features you would like to add. These should appear as issues/cards on your Project board.
- > * Make sure your README file and Project board are up-to-date reflecting the current status of your project (e.g. any changes that you have made during the project such as changes to your class diagram). Previous versions should still be visible through your commit history. 
- 
- ## Screenshots
- > Screenshots of the input/output after running your application
- ## Installation/Usage
- > Instructions on installing and running your application
- ## Testing
- > How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
-
  
  To run the game, all you need to do run `python3 main.py` in your terminal once you download this repository or at least the files: `main.py`, `board.py`, `pieces.py`, and `player.py`. 
 
@@ -137,8 +62,6 @@ The game alternates between the white and black players, until one player is che
  ## Testing using [pytest](https://docs.pytest.org/en/7.2.x/index.html)
 
  Please refer above to the bottom of the Installation/Usage section to install and run the `pytest` library.
-
-> How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
 
 For pieces.py, we tested isValidMove() for every chess piece which returns False for invalid moves, or calls on canMoveOrCapture() which returns True or "capture". For every chess piece, we tested valid and invalid moves. We tested that isValidMove() will return "capture" for pawn and knight. Pawn has special and more elaborate capture scenarios so we had multiple pawn tests. 
 
