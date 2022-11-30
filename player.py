@@ -2,6 +2,9 @@ from pieces import *
 from board import *
 import copy #use deepcopy() from copy module to deep copy a list
 
+def isOnBoard(index):
+    return index >= 1 and index <= 8
+
 class Player:
     name = ''
     #color can only be "W" or "B" case sensitive
@@ -141,6 +144,7 @@ class Player:
     def isCheckMate(self, opponent, checkingPiece):
         #if the king can't get of check and can't block and can't run it is check mate
         #DeMorgan's Law
+    
         if self.canGetOutOfCheckByKingMove(opponent):
             return True
         elif self.canGetOutOfCheckByBlock(opponent, checkingPiece):
