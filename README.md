@@ -65,6 +65,10 @@ The game alternates between the white and black players, until one player is che
 
 > How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
 
+For pieces.py, we tested isValidMove() for every chess piece which returns False for invalid moves, or calls on canMoveOrCapture() which returns True or "capture". For every chess piece, we tested valid and invalid moves. We tested that isValidMove() will return "capture" for pawn and knight. Pawn has special and more elaborate capture scenarios so we had multiple pawn tests. 
+
+For player.py, we tested movePiece() for checked and invalid moves. movePiece() calls on the isCheckMate() function to check if the king can't get of check, can't block, and can't run.
+
 
  ## Unimplemented/Future Interfaces
 ```
