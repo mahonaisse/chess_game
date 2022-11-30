@@ -48,4 +48,8 @@ The `Piece` class is an abstract class; it will allow all subclasses or, rather,
  > Instructions on installing and running your application
  ## Testing
  > How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
+
+For pieces.py, we tested isValidMove() for every chess piece which returns false or calls canMoveOrCapture(). We set up the piece and player1 and player2 moves. Pawn has special capture moves to check the pawn's ability to move based on the player piece and the player's opponent piece location. For every move, we tested valid and invalid moves. We tested isValidMove() will return "capture" for knight and pawn. This function is similarly called for other pieces. 
+
+For player.py we tested movePiece() for 5 different outcomes- True, False, stalemate, checkmate, and checked.
  
